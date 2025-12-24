@@ -1,5 +1,7 @@
 import java.io.FileWriter;
 import java.io.IOException;
+
+import User.Role;
 class Student extends User{
 	
 	String name,sName,userName;
@@ -7,16 +9,7 @@ class Student extends User{
 		
 	public Student (String name, String sName, String userName, long password ){
 		super(name,sName,userName,password,Role.Student);
-		
-		try {
-		FileWriter printer = new FileWriter("users.txt", true);
-		printer.write(userName +";"+ password +";"+ name +";"+ sName +";"+ Role.Student + "\n");
-		printer.close();
-		System.out.println("Öğrenci eklendi.\n");
-		}
-		catch (IOException e) {
-			System.out.println("Öğrenci eklenemedi.\n");
-		}
+		User.add(name,sName,userName,password,Role.Student);
 		
 }
 	public static void UI() {

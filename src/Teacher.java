@@ -1,28 +1,25 @@
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-class Teacher extends User{
-	String subject;
-	 
-	Scanner input = new Scanner(System.in);
+
+class Teacher{
+	String name,sName,userName,subject;
+	long password;
+	static Scanner input = new Scanner(System.in);
 	
 	public Teacher(String name, String sName, String userName, long password, String subject) {
-		super(name,sName,userName,password,Role.Teacher);
+		this.name = name;
+		this.sName = sName;
+		this.userName = userName;
+		this.password = password;
 		this.subject = subject;
+		User.add(name,sName,userName,password,subject,User.Role.Teacher);
 		
-		
-		try {
-		FileWriter printer = new FileWriter("users.txt", true);
-		printer.write(userName+";"+ password +";"+ name +";"+ sName +";"+ subject +";"+ Role.Teacher +"\n");
-		printer.close();
-		System.out.println("Öğretmen eklendi.\n");
 		}
-		catch (IOException e) {
-			System.out.println("Öğretmen eklenemedi.\n");
-		}
+	
+	public static void UI() throws FileNotFoundException {
 		
-}
-	public static void UI() {
 		 System.out.println("          Hoş geldiniz ");
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
          System.out.println("1) Quizleri görüntüle.");
@@ -32,6 +29,7 @@ class Teacher extends User{
          System.out.println("5) Çıkış yap.");
         
          int choice = input.nextInt();
+         
          boolean check = true;
          while(check){
             
@@ -69,5 +67,110 @@ class Teacher extends User{
           }
          }      
 	}
-
+	
+	public void changeQuestion(String quizName,int questionNo) {
+		System.out.println("Değiştirmek istediğiniz veriyi seçiniz.");
+		System.out.println("1) Soru metni");
+		System.out.println("2) Cevabı");
+		System.out.println("3) Puanı");
+		System.out.println("4) Zorluk derecesi");
+		System.out.println("5) Türü");
+		System.out.println("6) Geri");
+    	
+			int choice = input.nextInt();
+			int choice2;
+			boolean check = true;
+    	
+			while(check){
+         
+				switch(choice){
+          
+					case 1:
+						System.out.println("Soru metnini giriniz.");
+						String newQuestionText = input.nextLine();
+						Question.change(quizName,questionNo,"questionText",newQuestionText);
+						check = false;
+						break;
+           
+					case 2:
+						System.out.println("Cevabı giriniz.");
+						String newAnswer = input.nextLine();
+						Question.change(quizName,questionNo,"answer",newAnswer);
+						check = false;
+						break;
+       	 
+					case 3:
+						System.out.println("Puanı giriniz.");
+						int newPoints = input.nextInt();
+						Question.change(quizName,questionNo,newPoints);
+						check = false;
+						break;
+       	 
+					case 4:
+						System.out.println("Zorluk derecesini seçiniz.");
+						System.out.println("1) Kolay");
+						System.out.println("2) Orta");
+						System.out.println("3) Zor");
+						System.out.println("4) Geri");
+						choice2 = input.nextInt();
+						Question.Difficulty dif;
+						if (choice2==1) { 
+							dif = Question.Difficulty.Easy;
+							Question.change(quizName,questionNo,dif);
+						}
+						else if (choice2==2) { 
+							dif = Question.Difficulty.Medium;
+							Question.change(quizName,questionNo,dif);
+						}
+						else if (choice2==3) { 
+							dif = Question.Difficulty.Hard;
+							Question.change(quizName,questionNo,dif);
+						}
+						else if (choice2==4) { 
+							changeQuestion(quizName,questionNo);
+						}
+						else {
+							System.out.println("Geçersiz değer!"); 
+							changeQuestion(quizName,questionNo);
+						}
+						check = false;
+						break;
+             
+					case 5:
+						System.out.println("Soru türünü seçiniz.");
+						System.out.println("1) Test");
+						System.out.println("2) Doğru-Yanlış");
+						System.out.println("3) Geri");
+						choice2 = input.nextInt();
+						Question.Type type;
+						if (choice2==1) { 
+							type = Question.Type.MC;
+							Question.change(quizName,questionNo,type);
+						}
+						else if (choice2==2) { 
+							type = Question.Type.TF;
+							Question.change(quizName,questionNo,type);
+						}
+						else if (choice2==3) { 
+							changeQuestion(quizName,questionNo);
+						}
+						else {
+							System.out.println("Geçersiz değer!"); 
+							changeQuestion(quizName,questionNo);
+						}
+						check = false;
+						break;
+           
+					case 6:
+						System.out.println("Soru düzenleme iptal edildi.");
+						check = false;
+						break;
+						
+					default:
+						System.out.println("Geçerli bir değer giriniz.");
+						System.out.println("Yapmak istediğin işlemi giriniz.");
+						choice = input.nextInt();
+				}
+    	}
+	}
 }
