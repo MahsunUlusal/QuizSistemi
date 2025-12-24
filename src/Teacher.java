@@ -23,10 +23,9 @@ class Teacher{
 		 System.out.println("          Hoş geldiniz ");
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
          System.out.println("1) Quizleri görüntüle.");
-         System.out.println("2) Varolan quizi düzenle.");
-         System.out.println("3) Quiz oluştur.");
-         System.out.println("4) Öğrenci puanlarını görüntüle.");
-         System.out.println("5) Çıkış yap.");
+         System.out.println("2) Quiz oluştur.");
+         System.out.println("3) Öğrenci puanlarını görüntüle.");
+         System.out.println("4) Çıkış yap.");
         
          int choice = input.nextInt();
          
@@ -51,15 +50,10 @@ class Teacher{
                 break;
           	 
           	 case 4:
-                
+          		 Main.logIO();
                 check = false;
                 break;
                 
-             case 5:
-              Main.logIO();
-              check = false;
-              break;
-            
              default:
               System.out.println("Geçerli bir değer giriniz. (1, 2, 3, 4 veya 5)");
               System.out.println("Yapmak istediğin işlemi giriniz.");
@@ -74,8 +68,7 @@ class Teacher{
 		System.out.println("2) Cevabı");
 		System.out.println("3) Puanı");
 		System.out.println("4) Zorluk derecesi");
-		System.out.println("5) Türü");
-		System.out.println("6) Geri");
+		System.out.println("5) Geri");
     	
 			int choice = input.nextInt();
 			int choice2;
@@ -137,31 +130,6 @@ class Teacher{
 						break;
              
 					case 5:
-						System.out.println("Soru türünü seçiniz.");
-						System.out.println("1) Test");
-						System.out.println("2) Doğru-Yanlış");
-						System.out.println("3) Geri");
-						choice2 = input.nextInt();
-						Question.Type type;
-						if (choice2==1) { 
-							type = Question.Type.MC;
-							Question.change(quizName,questionNo,type);
-						}
-						else if (choice2==2) { 
-							type = Question.Type.TF;
-							Question.change(quizName,questionNo,type);
-						}
-						else if (choice2==3) { 
-							changeQuestion(quizName,questionNo);
-						}
-						else {
-							System.out.println("Geçersiz değer!"); 
-							changeQuestion(quizName,questionNo);
-						}
-						check = false;
-						break;
-           
-					case 6:
 						System.out.println("Soru düzenleme iptal edildi.");
 						check = false;
 						break;

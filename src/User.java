@@ -78,27 +78,27 @@ abstract class User implements FileOp{
 	 							switch(target) {
 	 						
 	 							case "name":
-	 								bw.write( splits[0] +";"+ splits[1] +";"+ newTarget +";"+ splits[3] +";"+ splits[4] +";"+ splits[5] +"\n");
+	 								bw.write( splits[0] +";"+ splits[1] +";"+ newTarget +";"+ splits[3] +";"+ splits[4] +";"+ splits[5]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 							
 	 							case "sName":
-	 								bw.write( splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ newTarget +";"+ splits[4] +";"+ splits[5] +"\n");
+	 								bw.write( splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ newTarget +";"+ splits[4] +";"+ splits[5]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
 	 							case "userName":
-	 								bw.write( newTarget +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5] +"\n");
+	 								bw.write( newTarget +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
 	 							case "password":
-	 								bw.write(splits[0] +";"+ newTarget +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5] +"\n");
+	 								bw.write(splits[0] +";"+ newTarget +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
 	 							case "subject":
-	 								bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ newTarget +";"+ splits[5] +"\n");
+	 								bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ newTarget +";"+ splits[5]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
@@ -109,22 +109,22 @@ abstract class User implements FileOp{
 	 							switch(target) {
 		 						
 	 							case "name":
-	 								bw.write( splits[0] +";"+ splits[1] +";"+ newTarget +";"+ splits[3] +";"+ splits[4] +"\n");
+	 								bw.write( splits[0] +";"+ splits[1] +";"+ newTarget +";"+ splits[3] +";"+ splits[4]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 							
 	 							case "sName":
-	 								bw.write( splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ newTarget +";"+ splits[4] +"\n");
+	 								bw.write( splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ newTarget +";"+ splits[4]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
 	 							case "userName":
-	 								bw.write( newTarget +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +"\n");
+	 								bw.write( newTarget +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
 	 							case "password":
-	 								bw.write(splits[0] +";"+ newTarget +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +"\n");
+	 								bw.write(splits[0] +";"+ newTarget +";"+ splits[2] +";"+ splits[3] +";"+ splits[4]);
 	 								System.out.println("Başarıyla değiştirildi.");
 	 								break;
 	 								
@@ -135,11 +135,11 @@ abstract class User implements FileOp{
 
 	 					else {
 	 						if(User.show(userName,password,"role")=="Teacher"){
-	 							bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5] +"\n");
+	 							bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5]);
 	 							bw.newLine();
 	 						}
 	 						else {
-	 							bw.write(splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +"\n");
+	 							bw.write(splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4]);
 	 							bw.newLine();
 	 						}
 	 					}
