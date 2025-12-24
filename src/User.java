@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.*;
 import java.io.FileNotFoundException;
@@ -57,7 +59,7 @@ abstract class User implements FileOp{
 	}
 	
 	
-		public static void change(String userName, long password, String target, String newTarget ) {
+	public static void change(String userName, long password, String target, String newTarget ) {
 			
 			File users = new File("Users.txt");
 	        File newUsers = new File("temp.txt");
@@ -151,14 +153,15 @@ abstract class User implements FileOp{
 	        }
 	        users.delete();
 	        newUsers.renameTo(users);
+	        System.out.println("Başarıyla değiştirildi");
 	}
 		
-		public static String show (String userName, long password, String target) {
+	public static String show (String userName, long password, String target) {
 			
-			try {
-				File users = new File("users.txt");
-				Scanner fileInput = new Scanner(users);
+		File users = new File("users.txt");
 		
+			try(Scanner fileInput = new Scanner(users)) {
+				
 				while(fileInput.hasNextLine()) {
 					String line = fileInput.nextLine();
 					String[] splits = line.split(";");
@@ -251,8 +254,8 @@ abstract class User implements FileOp{
         System.out.println("Hata: " + e.getMessage());
         }
         users.delete();
-        newUsers.renameTo(users);	
+        newUsers.renameTo(users);
+        System.out.println("Başarıyla silindi");
 	}
 	
-		
 }

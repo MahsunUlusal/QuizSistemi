@@ -2,14 +2,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import User.Role;
-class Student extends User{
+class Student{
 	
 	String name,sName,userName;
 	long password;
 		
 	public Student (String name, String sName, String userName, long password ){
-		super(name,sName,userName,password,Role.Student);
-		User.add(name,sName,userName,password,Role.Student);
+		this.name = name;
+		this.sName = sName;
+		this.userName = userName;
+		this.password = password;
+		User.add(name,sName,userName,password,User.Role.Student);
 		
 }
 	public static void UI() {

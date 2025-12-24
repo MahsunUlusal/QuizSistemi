@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 class Teacher{
+	
 	String name,sName,userName,subject;
 	long password;
 	static Scanner input = new Scanner(System.in);
