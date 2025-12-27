@@ -9,15 +9,14 @@ public class Admin{
     String name,sName,userName;
 	long password;
 	
-    private Admin(String name,String sName,String userName,long password){
+    private Admin(String name,String sName,String userName,long password) throws Exception{
     	this.name = name;
 		this.sName = sName;
 		this.userName = userName;
 		this.password = password;
-        User.add(name,sName,userName,password,User.Role.Admin);
-    }
-    
-    public static void UI() throws FileNotFoundException{ //neden
+		UI();
+   }
+   private static void UI() throws FileNotFoundException{ //neden
          System.out.println("          Hoş geldiniz ");
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
          System.out.println("1) Kullanıcı ekle.");
@@ -33,9 +32,9 @@ public class Admin{
           switch(choice){
           
              case 1:
-              addUser();
-              check = false;
-              break;
+            	 addUser();
+            	 check = false;
+            	 break;
               
              case 2:
                  removeUser();
@@ -53,18 +52,17 @@ public class Admin{
                  break;
               
              case 5:
-              Main.logIO();
-              check = false;
-              break;
+            	 Main.logIO();
+            	 check = false;
+            	 break;
             
              default:
-              System.out.println("Geçerli bir değer giriniz. (1 veya 2)");
-              System.out.println("Yapmak istediğin işlemi giriniz.");
-              choice = input.nextInt();
+            	 System.out.println("Geçerli bir değer giriniz. (1 veya 2)");
+            	 System.out.println("Yapmak istediğin işlemi giriniz.");
+            	 choice = input.nextInt();
           }
          }       
-     }
-    
+   }
    private static void removeUser() throws FileNotFoundException {
 	   System.out.println("Silmek istediğiniz kullanıcının kullanıcı adını giriniz.");
 	   String userName = input.nextLine();
@@ -79,9 +77,7 @@ public class Admin{
 		   else if(choice == 2) Admin.UI();
 		   else Admin.UI();
 	   }
-	}
-
-
+   }
    private static void showUser() {
 	   System.out.println("Görüntülemek istediğiniz kullanıcının kullanıcı adını giriniz.");
 	   String userName = input.nextLine();
@@ -153,8 +149,7 @@ public class Admin{
        		}
 	   }
 	   else System.out.println("Kullanıcı bulunamadı!");
-	}
-
+   }
    private static void addUser() throws FileNotFoundException{
        System.out.println("Hangi tür kullanıcı eklemek istersiniz?");
        System.out.println("1) Öğretmen");
@@ -178,11 +173,19 @@ public class Admin{
                     	if(!Main.isExist(name,sName)) {
                     		System.out.println("Öğretmenin dersini giriniz.");
                     		String subject = input.nextLine();
-                    		System.out.println("Öğretmenin kullanıcı ismini giriniz.");
-                    		String userName = input.nextLine();
+                    		String userName;
+                    		while(true) {
+                    			System.out.println("Öğretmenin kullanıcı adını giriniz.");
+                    			userName = input.nextLine();
+                    			if(Main.isExist(userName)) {
+                    			System.out.println("Bu kullanıcı adı zaten alınmış! Başka bir kullanıcı adı deneyiniz.");
+                    			}
+                    			else
+                    				break;
+                    			}
                     		System.out.println("Öğretmenin şifresini giriniz. (Sadece sayılardan oluşabilir)");
                     		long password = input.nextLong();
-                    		Teacher t = new Teacher(name,sName,userName,password,subject);
+                    		User.add(name,sName,userName,password,subject,User.Role.Teacher);
                     	}
                     	else {
                     		System.out.println("Öğretmen halihazırda mevcut.");
@@ -205,11 +208,19 @@ public class Admin{
                    System.out.println("Öğrencinin soy ismini giriniz.");
                    String sName = input.nextLine();
                    	if(!Main.isExist(name,sName)) {
-                   		System.out.println("Öğrencinin kullanıcı ismini giriniz.");
-                   		String userName = input.nextLine();
+                   		String userName;
+                   		while(true) {
+                			System.out.println("Öğrencinin kullanıcı adını giriniz.");
+                			userName = input.nextLine();
+                			if(Main.isExist(userName)) {
+                			System.out.println("Bu kullanıcı adı zaten alınmış! Başka bir kullanıcı adı deneyiniz.");
+                			}
+                			else
+                				break;
+                			}
                    		System.out.println("Öğrencinin şifresini giriniz. (Sadece sayılardan oluşabilir)");
                    		long password = input.nextLong();
-                   		Student s = new Student(name,sName,userName,password);
+                   		User.add(name,sName,userName,password,User.Role.Student);
                    	}
                    	else {
                    		System.out.println("Öğrenci halihazırda mevcut.");
@@ -232,11 +243,19 @@ public class Admin{
                    System.out.println("Adminin soy ismini giriniz.");
                    String sName = input.nextLine();
                    	if(!Main.isExist(name,sName)) {
-                   		System.out.println("Adminin kullanıcı ismini giriniz.");
-                   		String userName = input.nextLine();
+                   		String userName;
+                   		while(true) {
+                			System.out.println("Öğrencinin kullanıcı adını giriniz.");
+                			userName = input.nextLine();
+                			if(Main.isExist(userName)) {
+                			System.out.println("Bu kullanıcı adı zaten alınmış! Başka bir kullanıcı adı deneyiniz.");
+                			}
+                			else
+                				break;
+                			}
                    		System.out.println("Adminin şifresini giriniz. (Sadece sayılardan oluşabilir)");
                    		long password = input.nextLong();
-                   		Admin a = new Admin(name,sName,userName,password);
+                        User.add(name,sName,userName,password,User.Role.Admin);
                    	}
                    	else {
                    		System.out.println("Admin halihazırda mevcut.");
@@ -267,7 +286,7 @@ public class Admin{
          }
       
    }
-   public static void changeUser() throws FileNotFoundException { 
+   private static void changeUser() throws FileNotFoundException { 
 	  
 	   System.out.println("Değiştirmek istediğiniz kullanıcının kullanıcı adını giriniz.");
 	   String userName = input.nextLine();
@@ -352,5 +371,6 @@ public class Admin{
 	   else {
 		   System.out.println("Kullanıcı bulunamadı!");
 	   }
-   	}
+   }
+   
 }

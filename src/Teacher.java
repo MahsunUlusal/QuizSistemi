@@ -9,17 +9,16 @@ class Teacher{
 	long password;
 	static Scanner input = new Scanner(System.in);
 	
-	public Teacher(String name, String sName, String userName, long password, String subject) {
+	public Teacher(String name, String sName, String userName, long password, String subject) throws Exception {
 		this.name = name;
 		this.sName = sName;
 		this.userName = userName;
 		this.password = password;
 		this.subject = subject;
-		User.add(name,sName,userName,password,subject,User.Role.Teacher);
-		
+		UI();
 		}
 	
-	public static void UI() throws FileNotFoundException {
+	private void UI() throws Exception {
 		
 		 System.out.println("          Hoş geldiniz ");
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
@@ -41,7 +40,9 @@ class Teacher{
               break;
               
           	 case 2:
-                
+          		System.out.println("Quizin ismini giriniz.");
+         		String quizName = input.nextLine();
+         		 Quiz quiz = new Quiz (quizName,subject,userName);
                 check = false;
                 break;
           	 

@@ -11,11 +11,9 @@ class Student{
 		this.name = name;
 		this.sName = sName;
 		this.userName = userName;
-		this.password = password;
-		User.add(name,sName,userName,password,User.Role.Student);
-		
+		this.password = password;	
 }
-	public static void UI() {
+	private static void UI() {
 		
 	}
 		 System.out.println("          Hoş geldiniz ");

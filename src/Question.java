@@ -15,8 +15,7 @@ public abstract class Question implements FileOp{
 	public enum Difficulty{
 		Hard,Medium,Easy
 	}
-	
-	public void add(int counter, String question, String answer, int points, String subject, Difficulty dif, Type type) {
+	public static void add(int counter, String question, String answer, int points, String subject, Difficulty dif, Type type) {
 
 		String fileName = subject + ".txt";
 		
@@ -31,7 +30,6 @@ public abstract class Question implements FileOp{
        }
 		
 	}
-
 	public static void change(String subject,String quizName,int questionNo, String target, String newTarget) {
 	
 		if(target == "answer") {
@@ -142,8 +140,7 @@ public abstract class Question implements FileOp{
             newQuiz.renameTo(quiz);
 
 		}
-	}
-	
+	}	
 	public static void change(String subject, String quizName,int questionNo, Difficulty newTarget) {
 		
 		File quiz = new File(subject+".txt");
@@ -193,9 +190,7 @@ public abstract class Question implements FileOp{
             }
             quiz.delete();
             newQuiz.renameTo(quiz);
-    	}
-      
-	
+    }    
 	public static void change(String subject, String quizName,int questionNo, int newTarget) {
 		
 		File quiz = new File(subject+".txt");
@@ -244,8 +239,7 @@ public abstract class Question implements FileOp{
             quiz.delete();
             newQuiz.renameTo(quiz);
 	}
-
-	public void remove(String subject, String quizName,int questionNo) {
+	public static void remove(String subject, String quizName,int questionNo) {
 		File quiz = new File(subject+".txt");
         File newQuiz= new File("temp.txt");
 		
@@ -294,8 +288,7 @@ public abstract class Question implements FileOp{
             quiz.delete();
             newQuiz.renameTo(quiz);
 	}
-
-	public String show(String subject, String quizName,int questionNo, String target) {
+	public static String show(String subject, String quizName,int questionNo, String target) {
 //neden leak hatası veriyor ? Yanına parantez ile yazınca ne değişti?		
 		File quiz = new File(subject+".txt");
 		
@@ -376,4 +369,62 @@ public abstract class Question implements FileOp{
 		System.out.println("Hata!");
 		return null;
 	}
+	public static void removeQuiz(String subject, String quizName, int questionCounter) {
+		
+		for(int i=1;i<=questionCounter;i++) {  
+			Question.remove(subject, quizName, i);
+		}
+		File quiz = new File(subject+".txt");
+        File newQuiz= new File("temp.txt");
+		
+        try (BufferedReader br = new BufferedReader(new FileReader(quiz)); BufferedWriter bw = new BufferedWriter(new FileWriter(newQuiz))){
+        	String line;
+        	 while ((line = br.readLine()) != null) {
+        		 //hoca ismi | quiz ismi | soru
+        		 String[] splits = line.split("|");
+        		 
+        		 if(splits[1].equals(quizName)) {
+						continue;
+				}
+ 				else {
+ 					bw.write( splits[0] +"|"+ splits[1] +"|"+ splits[2]);
+ 					bw.newLine();
+ 				}
+ 			}
+        }
+        
+        catch (IOException e) {
+            System.out.println("Hata: " + e.getMessage());
+            }
+            quiz.delete();
+            newQuiz.renameTo(quiz);
+
+	}
+	public static void finishQuiz(String subject, String quizName) {
+
+		String fileName = subject + ".txt";
+		
+		try{
+            FileWriter printer = new FileWriter(fileName,true);
+            printer.write("\n");
+            printer.close();
+        }
+       catch(IOException e){
+           System.out.println("Quiz tamamlanamadı.\n");
+       }
+	}
+	public static void createQuiz(String subject, String quizName, String userName) {
+
+		String fileName = subject + ".txt";
+		
+		try{
+            FileWriter printer = new FileWriter(fileName,true);
+            printer.write(userName +"|"+ quizName +"|");
+            printer.close();
+        }
+       catch(IOException e){
+           System.out.println("Quiz oluşturulamadı!\n");
+       }
+	}
+
 }

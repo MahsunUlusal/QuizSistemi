@@ -140,4 +140,32 @@ public class Main {
 		}
 	}
 	
+	public static boolean isExist(String userName) {
+		
+		try {
+			
+			File users = new File("users.txt");
+			Scanner fileInput = new Scanner(users);
+	
+			while(fileInput.hasNextLine()) {
+				String line = fileInput.nextLine();
+				String[] splits = line.split(";");
+
+				if(splits.length>=4) {
+					if(splits[0].equals(userName)) {
+						fileInput.close();
+						return true;
+						}
+				}
+			}
+
+			fileInput.close();
+			return false;
+		
+		}
+		catch (FileNotFoundException e) {
+			return false;
+		}
+	}
+	
 }
