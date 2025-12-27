@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 
 
@@ -9,14 +8,14 @@ public class Admin{
     String name,sName,userName;
 	long password;
 	
-    private Admin(String name,String sName,String userName,long password) throws Exception{
+    public Admin(String name,String sName,String userName,long password) throws Exception{
     	this.name = name;
 		this.sName = sName;
 		this.userName = userName;
 		this.password = password;
 		UI();
    }
-   private static void UI() throws FileNotFoundException{ //neden
+   private static void UI() throws Exception{ //neden
          System.out.println("          Hoş geldiniz ");
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
          System.out.println("1) Kullanıcı ekle.");
@@ -63,7 +62,7 @@ public class Admin{
           }
          }       
    }
-   private static void removeUser() throws FileNotFoundException {
+   private static void removeUser() throws Exception {
 	   System.out.println("Silmek istediğiniz kullanıcının kullanıcı adını giriniz.");
 	   String userName = input.nextLine();
 	   System.out.println("Silmek istediğiniz kullanıcının şifresini giriniz.");//geri çıkma?
@@ -150,7 +149,7 @@ public class Admin{
 	   }
 	   else System.out.println("Kullanıcı bulunamadı!");
    }
-   private static void addUser() throws FileNotFoundException{
+   private static void addUser() throws Exception{
        System.out.println("Hangi tür kullanıcı eklemek istersiniz?");
        System.out.println("1) Öğretmen");
        System.out.println("2) Öğrenci");
@@ -270,9 +269,8 @@ public class Admin{
                  check = false;
                  break;
            
-             case 4:
-            	 
-            	 Admin.UI();
+             case 4: 
+            	 UI();
             	 break;
             	 
             
@@ -286,7 +284,7 @@ public class Admin{
          }
       
    }
-   private static void changeUser() throws FileNotFoundException { 
+   private static void changeUser() throws Exception { 
 	  
 	   System.out.println("Değiştirmek istediğiniz kullanıcının kullanıcı adını giriniz.");
 	   String userName = input.nextLine();

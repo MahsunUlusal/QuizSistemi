@@ -28,7 +28,6 @@ abstract class User implements FileOp{
 	}
 	public static void UI() {
 	}
-	
 	public static void add(String name, String sName, String userName, long password, Role role ) {
 		
 		try{
@@ -42,8 +41,6 @@ abstract class User implements FileOp{
        }
 		
 	}
-	
-	//overload
 	public static void add(String name, String sName, String userName, long password, String subject, Role role ) {
 		
 		try{
@@ -57,8 +54,6 @@ abstract class User implements FileOp{
        }
 		
 	}
-	
-	
 	public static void change(String userName, long password, String target, String newTarget ) {
 			
 			File users = new File("Users.txt");
@@ -154,8 +149,7 @@ abstract class User implements FileOp{
 	        users.delete();
 	        newUsers.renameTo(users);
 	        System.out.println("Başarıyla değiştirildi");
-	}
-		
+	}	
 	public static String show (String userName, long password, String target) {
 			
 		File users = new File("users.txt");
@@ -216,8 +210,7 @@ abstract class User implements FileOp{
 			}
 			System.out.println("Hata!");
 			return null;
-		}
-		
+	}	
 	public static void remove(String userName,long password) {
 		
 		File users = new File("Users.txt");

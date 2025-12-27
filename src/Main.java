@@ -1,6 +1,3 @@
-//Bilgilerimi görüntüle eklenebilir
-//Her adımda geri gitme ekle
-
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +8,7 @@ public class Main {
 	
 	}
 	
-	public static void logIO() throws FileNotFoundException {  // neden throws eklemem lazım?
+	public static void logIO() throws Exception {  // neden throws eklemem lazım?
 		String userName;
 		long password;
 		Scanner input = new Scanner(System.in);
@@ -21,21 +18,23 @@ public class Main {
         password = input.nextLong();
         
         if(isExist(userName,password)) {
-        	
-        	String role = whatRole(userName,password);
+        	String name = User.show(userName,password,"name");
+        	String sName = User.show(userName,password,"sName");        	
+        	String role = User.show(userName,password,"role");
         	
         	switch(role){
         		
         	case "Teacher":
-        		Teacher.UI();
+        		String subject = User.show(userName,password,"subject");
+        		Teacher teacher = new Teacher(name,sName,userName,password,subject);
         		break;
         		
         	case "Student":
-        		Student.UI();
+        		Student student = new Student(name,sName,userName,password);
         		break;
         		
         	case "Admin":
-        		Admin.UI();
+        		Admin admin = new Admin(name,sName,userName,password);
         		break;
         		
         	default:
@@ -50,36 +49,6 @@ public class Main {
         	input.close();
         	logIO();
         }
-	}
-	
-	private static String whatRole(String userName, long password){
-		
-		try {
-			
-			File users = new File("users.txt");
-			Scanner fileInput = new Scanner(users);
-		
-			while(fileInput.hasNextLine()) {
-				String line = fileInput.nextLine();
-				String[] splits = line.split(";");
-			
-				String passwordString = Long.toString(password);
-			
-				if(splits.length>=5) {
-					int n = splits.length;
-					if(splits[0].equals(userName) && splits[1].equals(passwordString)) {
-						fileInput.close();
-						return splits[n-1];
-						}
-				}
-			}
-			fileInput.close();
-			return null;
-			
-		}
-		catch (FileNotFoundException e) {
-			return null;
-		}
 	}
 	
 	public static boolean isExist(String name,String sName){
