@@ -1,10 +1,13 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 class Teacher{
 	
 	String name,sName,userName,subject;
 	long password;
 	static Scanner input = new Scanner(System.in);
+	List<String> quizes = new ArrayList<>();
 	
 	public Teacher(String name, String sName, String userName, long password, String subject) throws Exception {
 		this.name = name;
@@ -31,17 +34,33 @@ class Teacher{
             
           switch(choice){
              
-          	 case 1:
+          	 case 1:{
+          		 System.out.println("Görüntülemek istediğniz quizi seçiniz.\n");
+          		 quizes = Question.quizList(userName,subject);
+          		 System.out.println("Quizleriniz: \n");
+          		 for(int i=0; i<quizes.size() ; i++)
+          		 System.out.println((i+1)+")"+quizes.get(i));
+          		int quizChoice;
+          		 while(true) {
+          			quizChoice = input.nextInt();
+        			if(quizChoice<0 || quizes.size()<quizChoice)
+        				System.out.println("Geçersiz değer! Tekrar giriniz.");
+        			else
+        		 		break;
+        		 	}
+          		 String quizName = quizes.get(quizChoice-1);
+          		 Question.showAllQuiz(subject,quizName,userName,password,null);
+          		 check = false;
+          		 break;
+          	 }
               
-              check = false;
-              break;
-              
-          	 case 2:
+          	 case 2:{
           		System.out.println("Quizin ismini giriniz.");
          		String quizName = input.nextLine();
          		 Quiz quiz = new Quiz (quizName,subject,userName);
                 check = false;
                 break;
+          	 }
           	 
           	 case 3:
                 
