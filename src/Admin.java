@@ -235,7 +235,7 @@ public class Admin{
                  break;
              
              case 3:
-
+            	 while(true) {
                  try{
                    System.out.println("Adminin ismini giriniz.");
                    String name = input.nextLine();
@@ -258,20 +258,16 @@ public class Admin{
                    	}
                    	else {
                    		System.out.println("Admin halihazırda mevcut.");
-                   		check = false;
-                   		break;
+                   		UI();
                    	}
                  }
                  catch (InputMismatchException e){
                      System.out.println("Lütfen geçerli bir veri tipi giriniz!");
-                 }                
+                 }     
+            	 }
                  
-                 check = false;
-                 break;
-           
              case 4: 
             	 UI();
-            	 break;
             	 
             
              default:
@@ -281,6 +277,7 @@ public class Admin{
               choice = input.nextInt();
               
           }
+            	 
          }
       
    }

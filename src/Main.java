@@ -4,8 +4,9 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-	public static void main(String[] args) {
-	
+	public static void main(String[] args) throws Exception {
+		long password=563421;
+		logIO();
 	}
 	
 	public static void logIO() throws Exception {  // neden throws eklemem lazım?
@@ -136,5 +137,4 @@ public class Main {
 			return false;
 		}
 	}
-	
 }

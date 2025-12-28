@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class QuizOp implements FileOp{
-
+	
+	static Scanner input = new Scanner(System.in);
+	
 	public enum Type{
 		TF,MC
 	}
@@ -421,7 +423,7 @@ public abstract class QuizOp implements FileOp{
 	}
 	public static void showAllQuiz(String subject, String quizName, String userName, long password, List<String> answers) {
 		
-		File quiz = new File(subject+".txt");
+		File quiz = new File(subject+".txt");//quiz boyutu için
 		
 		try (Scanner fileInput = new Scanner(quiz)){
 	
@@ -437,8 +439,10 @@ public abstract class QuizOp implements FileOp{
 						System.out.println(splits[1]+"\n\n");
 						String allQuestionLine = splits[2];
 						String[] oneQuestionSplits = allQuestionLine.split("*");
+						
 						for(int i=1; i <= oneQuestionSplits.length - 1; i++ ) {
 							System.out.println(i+".soru\n");
+							
 							if(QuizOp.show(subject,quizName,i,"type") == "MC") {
 								String questionLine = QuizOp.show(subject,quizName,i,"question");
 								String[] questionSplits = questionLine.split("¿");
@@ -448,6 +452,7 @@ public abstract class QuizOp implements FileOp{
 								System.out.println("C)"+ questionSplits[3]);
 								System.out.println("D)"+ questionSplits[4] + "\n");
 								System.out.println("Cevap: "+ QuizOp.show(subject,quizName,i,"answer"));
+								
 								if(User.show(userName,password,"role") == "Student")
 									System.out.println("Verdiğiniz cevap: "+ answers.get(i-1));
 								
@@ -631,7 +636,7 @@ public abstract class QuizOp implements FileOp{
 							String quizLine2 = oneQuizSplits[i];
 							String[] quizSplits2 = quizLine2.split("#");
 							if(quizSplits2[2]== "-1")
-								quizes.add(quizSplits2[1]);			
+								quizes.add(quizSplits2[0] +"#"+ quizSplits2[1] );			
 						}
 						return quizes;
 					}
@@ -648,5 +653,237 @@ public abstract class QuizOp implements FileOp{
 			return null;
 		}
 		return null;
+	}
+	public static void enterQuiz(String subject,String quizName, String userName, long password) throws Exception {
+		
+		List<String> answers = new ArrayList<>();
+		File quiz = new File(subject+".txt");//quiz boyutu için
+		
+		try (Scanner fileInput = new Scanner(quiz)){
+	
+			while(fileInput.hasNextLine()) {
+				
+				String line = fileInput.nextLine();
+				String[] splits = line.split("|");
+				
+				if(splits.length==3) {
+					
+					if(splits[1].equals(quizName)) {
+					
+						System.out.println(splits[1]+"\n\n");
+						String allQuestionLine = splits[2];
+						String[] oneQuestionSplits = allQuestionLine.split("*");
+						
+						for(int i=1; i <= oneQuestionSplits.length - 1; i++ ) {
+							System.out.println(i+".soru\n");
+							String dif = QuizOp.show(subject,quizName,i,"dif");
+		         			if (dif == "EASY") System.out.println("Zorluk türü: Kolay"); 
+		             		else if (dif == "MEDİUM") System.out.println("Zorluk türü: Orta"); 
+		             		else if (dif == "HARD") System.out.println("Zorluk türü: Zor"); 
+		         			System.out.println("Puanı: "+ QuizOp.show(subject,quizName,i,"points")+"\n");
+		         			String answer = null;
+							if(QuizOp.show(subject,quizName,i,"type") == "MC") {
+								String questionLine = QuizOp.show(subject,quizName,i,"question");
+								String[] questionSplits = questionLine.split("¿");
+								System.out.println(questionSplits[0]+"\n");
+								System.out.println("A)"+ questionSplits[1]);
+								System.out.println("B)"+ questionSplits[2]);
+								System.out.println("C)"+ questionSplits[3]);
+								System.out.println("D)"+ questionSplits[4] + "\n");
+								System.out.println("Cevabınızı giriniz.");
+								boolean check=true;
+								while(check) {
+				          			answer = input.nextLine();
+				        			switch(answer) {
+				        			
+				        			case "a","A":
+				        				answer = "A";
+				        				check = false;
+				        				break;
+				        				
+				        			case "b","B":
+				        				answer = "B";
+				        				check = false;
+						        		break;
+						        		
+				        			case "c","C":
+				        				answer = "C";	
+				        				check = false;
+				        			
+				        			case"d","D":
+				        				answer = "D";
+				        				check = false;
+				        				
+				        			default:
+				        				System.out.println("Geçersiz değer! Tekrar giriniz.");
+				        				break;
+				        		 	}
+								}
+							}
+							else {
+								System.out.println(QuizOp.show(subject,quizName,i,"question")+"\n");
+								System.out.println("A) Doğru\nB) Yanlış\n");
+								System.out.println("Cevabınızı giriniz.");
+								boolean check=true;
+								while(check) {
+									answer = input.nextLine();
+				        			switch(answer) {
+				        			
+				        			case "a","A":
+				        				answer = "A";
+				        				check = false;
+				        				break;
+				        				
+				        			case "b","B":
+				        				answer = "B";
+				        				check = false;
+						        		break;
+						        		
+				        			default:
+				        				System.out.println("Geçersiz değer! Tekrar giriniz.");
+				        				break;
+				        		 	}
+							}		
+					 }
+					answers.add(answer);		
+				  }
+						System.out.println("Tüm soruları cevapladınız.\n");
+						System.out.println("1)Quizi tamamla");
+						System.out.println("2)Cevabı düzenle");
+						while(true) {
+		          			int choice = input.nextInt();
+		        			if(choice==1) {
+		        				addScore(userName,password,subject,quizName,calcScore(subject, quizName,answers));
+		        				System.out.println("Quiz tamamlandı.");
+		        				System.out.println("Puanınız: " + calcScore(subject, quizName,answers));
+		        				System.out.println("Quizi görüntülemek ister misiniz?");
+		        				System.out.println("1) Evet");
+								System.out.println("2) Hayır");
+		        				while(true) {
+				          			int choice2 = input.nextInt();
+				        			if(choice2==1) {
+				        				QuizOp.showAllQuiz(subject, quizName, userName, password, answers);
+				        				Student.callUI(userName,password);
+				        			}
+				        			else if(choice2==2) {
+				        				Student.callUI(userName,password);
+				        			}
+				        			else
+				        				System.out.println("Geçersiz değer tekrar giriniz.");
+		        				}
+		        			}
+		        			else if (choice==2) {
+		        				
+		        				System.out.println("Kaçıncı soruyu değiştirmek istersiniz?");
+		        				int questionNo = input.nextInt();
+		        				System.out.println(questionNo+".soru\n");
+								String dif = QuizOp.show(subject,quizName,questionNo,"dif");
+			         			if (dif == "EASY") System.out.println("Zorluk türü: Kolay"); 
+			             		else if (dif == "MEDİUM") System.out.println("Zorluk türü: Orta"); 
+			             		else if (dif == "HARD") System.out.println("Zorluk türü: Zor"); 
+			         			System.out.println("Puanı: "+ QuizOp.show(subject,quizName,questionNo,"points")+"\n");
+			         			String answer = null;
+								if(QuizOp.show(subject,quizName,questionNo,"type") == "MC") {
+									String questionLine = QuizOp.show(subject,quizName,questionNo,"question");
+									String[] questionSplits = questionLine.split("¿");
+									System.out.println(questionSplits[0]+"\n");
+									System.out.println("A)"+ questionSplits[1]);
+									System.out.println("B)"+ questionSplits[2]);
+									System.out.println("C)"+ questionSplits[3]);
+									System.out.println("D)"+ questionSplits[4] + "\n");
+									System.out.println("Cevabınızı giriniz.");
+									boolean check;
+									while(check = true) {
+					          			answer = input.nextLine();
+					        			switch(answer) {
+					        			
+					        			case "a","A":
+					        				answer = "A";
+					        				check = false;
+					        				break;
+					        				
+					        			case "b","B":
+					        				answer = "B";
+					        				check = false;
+							        		break;
+							        		
+					        			case "c","C":
+					        				answer = "C";	
+					        				check = false;
+					        			
+					        			case"d","D":
+					        				answer = "D";
+					        				check = false;
+					        				
+					        			default:
+					        				System.out.println("Geçersiz değer! Tekrar giriniz.");
+					        				break;
+					        		 	}
+									}
+								}
+								else {
+									System.out.println(QuizOp.show(subject,quizName,questionNo,"question")+"\n");
+									System.out.println("A) Doğru\nB) Yanlış\n");
+									System.out.println("Cevabınızı giriniz.");
+									boolean check;
+									while(check=true) {
+										answer = input.nextLine();
+					        			switch(answer) {
+					        			
+					        			case "a","A":
+					        				answer = "A";
+					        				check = false;
+					        				break;
+					        				
+					        			case "b","B":
+					        				answer = "B";
+					        				check = false;
+							        		break;
+							        		
+					        			default:
+					        				System.out.println("Geçersiz değer! Tekrar giriniz.");
+					        				break;
+					        		 	}
+								}		
+						 }
+						answers.set(questionNo-1,answer);
+						System.out.println("Başarıyla değiştirildi.");
+						System.out.println("1)Quizi tamamla");
+						System.out.println("2)Cevabı düzenle");
+		        		}
+		        			else
+		        				System.out.println("Geçersiz değer tekrar giriniz.");
+					}
+				}
+			}
+		}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Hata!");
+		}
+		System.out.println("Hata! Quiz bulunamadı");
+	}
+	private static void addScore(String userName,long password,String subject, String quizName, int score) {
+		String name = User.show(userName, password,"name");
+		String sName = User.show(userName, password,"sName");
+		try{
+            FileWriter printer = new FileWriter("scores.txt",true);
+            printer.write( userName +"|"+ name +"|"+ sName +"|"+ quizName +"#"+ subject +"#"+ score+ "\n");
+            printer.close();
+        }
+       catch(IOException e){
+           System.out.println("Puan eklenemedi.\n");
+       }
+		
+	}
+	private static int calcScore(String subject, String quizName, List<String> answers) {
+		int score=0;
+		for(int i=0;i<answers.size();i++) {
+			String pointsString = QuizOp.show(subject, quizName, i+1, "points");
+			int points = Integer.parseInt(pointsString);
+			if(answers.get(i)== QuizOp.show(subject, quizName, i+1, "answer"))
+				score+=points;
+		}
+		return score;
 	}
 	}
