@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class Question implements FileOp{
+public abstract class QuizOp implements FileOp{
 
 	public enum Type{
 		TF,MC
@@ -365,7 +365,7 @@ public abstract class Question implements FileOp{
 	public static void removeQuiz(String subject, String quizName, int questionCounter) {
 		
 		for(int i=1;i<=questionCounter;i++) {  
-			Question.remove(subject, quizName, i);
+			QuizOp.remove(subject, quizName, i);
 		}
 		File quiz = new File(subject+".txt");
         File newQuiz= new File("temp.txt");
@@ -439,22 +439,22 @@ public abstract class Question implements FileOp{
 						String[] oneQuestionSplits = allQuestionLine.split("*");
 						for(int i=1; i <= oneQuestionSplits.length - 1; i++ ) {
 							System.out.println(i+".soru\n");
-							if(Question.show(subject,quizName,i,"type") == "MC") {
-								String questionLine = Question.show(subject,quizName,i,"question");
+							if(QuizOp.show(subject,quizName,i,"type") == "MC") {
+								String questionLine = QuizOp.show(subject,quizName,i,"question");
 								String[] questionSplits = questionLine.split("¿");
 								System.out.println(questionSplits[0]+"\n");
 								System.out.println("A)"+ questionSplits[1]);
 								System.out.println("B)"+ questionSplits[2]);
 								System.out.println("C)"+ questionSplits[3]);
 								System.out.println("D)"+ questionSplits[4] + "\n");
-								System.out.println("Cevap: "+ Question.show(subject,quizName,i,"answer"));
+								System.out.println("Cevap: "+ QuizOp.show(subject,quizName,i,"answer"));
 								if(User.show(userName,password,"role") == "Student")
 									System.out.println("Verdiğiniz cevap: "+ answers.get(i-1));
 								
 							}
 							else {
-								System.out.println("Cevap: "+ Question.show(subject,quizName,i,"question"));
-								String answer = Question.show(subject,quizName,i,"answer");
+								System.out.println("Cevap: "+ QuizOp.show(subject,quizName,i,"question"));
+								String answer = QuizOp.show(subject,quizName,i,"answer");
 								System.out.println("A) Doğru\nB) Yanlış\n");
 								if (answer == "True") System.out.println("Cevap: Doğru"); 
 								else if (answer == "False") System.out.println("Cevap: Yanlış"); 
@@ -462,11 +462,11 @@ public abstract class Question implements FileOp{
 									System.out.println("Verdiğiniz cevap: "+ answers.get(i-1));
 							}
 		         		 	
-		         			String dif = Question.show(subject,quizName,i,"dif");
+		         			String dif = QuizOp.show(subject,quizName,i,"dif");
 		         			if (dif == "EASY") System.out.println("Zorluk türü: Kolay"); 
 		             		else if (dif == "MEDİUM") System.out.println("Zorluk türü: Orta"); 
 		             		else if (dif == "HARD") System.out.println("Zorluk türü: Zor"); 
-		         			System.out.println("Puanı: "+ Question.show(subject,quizName,i,"points"));
+		         			System.out.println("Puanı: "+ QuizOp.show(subject,quizName,i,"points"));
 					 }
 				  }
 				}
@@ -514,5 +514,139 @@ public abstract class Question implements FileOp{
 			return null;
 		}	
 	}
-	
-}
+	public static void scoresList(String userName,long password, String name, String sName){
+		
+		if(Main.isExist(name,sName)) {
+			
+			if(User.show(userName, password, "role") == "Teacher") {
+				File scores = new File("scores.txt");
+				
+				try (Scanner fileInput = new Scanner(scores)){
+			
+					while(fileInput.hasNextLine()) {
+						
+						String line = fileInput.nextLine();
+						String[] splits = line.split("|");
+												
+						if(splits.length==4) {
+							
+							if(splits[0].equals(userName)) {
+								
+									String allQuizLine = splits[3];
+									String[] oneQuizSplits = allQuizLine.split("*");
+									System.out.println(User.show(userName, password, "subject") +"\n\n");
+									for(int i=0; i<oneQuizSplits.length; i++) {
+										String quizLine2 = oneQuizSplits[i];
+										String[] quizSplits2 = quizLine2.split("#");
+										
+										if(quizSplits2[0].equals(User.show(userName, password,"subject"))) {
+											System.out.println("Quiz ismi: "+ quizSplits2[1] +"Puanı:  "+ quizSplits2[2] +"\n");												
+										}
+									}
+							}
+						}
+						else {
+							System.out.println("Hata! Bozuk dosya yapısı.");
+							fileInput.close();
+						}
+				}
+			}
+			catch (FileNotFoundException e) {
+				System.out.println("Hata!");
+			}
+		System.out.println("Hata! Quiz bulunamadı");
+		}
+			else if(User.show(userName, password, "role") == "Student"){
+				List<String> subjects = new ArrayList<>();
+				File scores = new File("scores.txt");
+			
+				try (Scanner fileInput = new Scanner(scores)){
+		
+					while(fileInput.hasNextLine()) {
+					
+						String line = fileInput.nextLine();
+						String[] splits = line.split("|");
+											
+						if(splits.length==4) {
+						
+							if(splits[1].equals(name) && splits[2].equals(sName)) {
+							
+								String allQuizLine = splits[3];
+								String[] oneQuizSplits = allQuizLine.split("*");
+								for(int i=0; i<oneQuizSplits.length-1; i++) {
+									String quizLine2 = oneQuizSplits[i];
+									String[] quizSplits2 = quizLine2.split("#");
+									if(!subjects.contains(quizSplits2[0]))
+										subjects.add(quizSplits2[0]);
+								}
+								for(int j=0;j<subjects.size();j++) {
+									System.out.println(subjects.get(j) +"\n\n");
+									for(int i=0; i<oneQuizSplits.length-1; i++) {
+										String quizLine2 = oneQuizSplits[i];
+										String[] quizSplits2 = quizLine2.split("#");
+										if(quizSplits2[0].equals(subjects.get(j))) {
+											if(quizSplits2[2]!= "-1")
+												System.out.println("Quiz ismi: "+ quizSplits2[1] +"Puanı:  "+ quizSplits2[2]);	
+											else
+												System.out.println("Quiz ismi: "+ quizSplits2[1] +"Puanı:  Girilmedi");
+										}
+									}
+								}
+							}
+						}
+						else {
+							System.out.println("Hata! Bozuk dosya yapısı.");
+							fileInput.close();
+						}
+					}
+				}
+				catch (FileNotFoundException e) {
+					System.out.println("Hata!");
+				}
+			}
+			else {
+				System.out.println("Hata! Yetkisiz erişim.");
+		}
+		}
+		System.out.println("Hata! Öğrenci bulunamadı.");
+	}
+	public static List<String> unsolvedQuizes(String userName) {
+		List<String> quizes = new ArrayList<>();
+		File scores = new File("scores.txt");
+		
+		try (Scanner fileInput = new Scanner(scores)){
+
+			while(fileInput.hasNextLine()) {
+			
+				String line = fileInput.nextLine();
+				String[] splits = line.split("|");
+									
+				if(splits.length==4) {
+				
+					if(splits[0].equals(userName)) {
+					
+						String allQuizLine = splits[3];
+						String[] oneQuizSplits = allQuizLine.split("*");
+						for(int i=0; i<oneQuizSplits.length-1; i++) {
+							String quizLine2 = oneQuizSplits[i];
+							String[] quizSplits2 = quizLine2.split("#");
+							if(quizSplits2[2]== "-1")
+								quizes.add(quizSplits2[1]);			
+						}
+						return quizes;
+					}
+				}
+				else {
+					System.out.println("Hata! Bozuk dosya yapısı.");
+					fileInput.close();
+					return null;
+				}
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Hata!");
+			return null;
+		}
+		return null;
+	}
+	}

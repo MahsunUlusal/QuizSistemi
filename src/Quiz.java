@@ -8,7 +8,7 @@ static Scanner input = new Scanner(System.in);
 	public Quiz(String quizName, String subject, String userName) throws Exception {
 		this.quizName = quizName;
 		this.subject = subject;
-		Question.createQuiz(subject,quizName,userName);
+		QuizOp.createQuiz(subject,quizName,userName);
 		this.pointsCounter=0;
 		this.questionCounter=0;
 		UI();
@@ -36,15 +36,15 @@ static Scanner input = new Scanner(System.in);
          		System.out.println("1) Test");
          		System.out.println("2) Doğru-Yanlış");
          		int typeChoice = input.nextInt();
-         		Question.Type type = null;
+         		QuizOp.Type type = null;
          		switch(typeChoice) {
      			
      			case 1:
-     				type = Question.Type.MC;
+     				type = QuizOp.Type.MC;
      				break;
      			
      			case 2:
-     				type = Question.Type.TF;
+     				type = QuizOp.Type.TF;
      				break;
      			}
          		
@@ -143,15 +143,15 @@ static Scanner input = new Scanner(System.in);
          		System.out.println("2) Orta");
          		System.out.println("3) Zor");
          		int difNo = input.nextInt();
-         		Question.Difficulty dif = null;
-         		if (difNo == 1) dif = Question.Difficulty.Easy;
-         		else if (difNo == 2) dif = Question.Difficulty.Medium;
-         		else if (difNo == 3) dif = Question.Difficulty.Hard;
+         		QuizOp.Difficulty dif = null;
+         		if (difNo == 1) dif = QuizOp.Difficulty.Easy;
+         		else if (difNo == 2) dif = QuizOp.Difficulty.Medium;
+         		else if (difNo == 3) dif = QuizOp.Difficulty.Hard;
          		else {
          			System.out.println("Geçerli bir değer giriniz.");
          			UI();
          		}
-         		Question.add(questionCounter++,question,answer,points,subject,dif,type);
+         		QuizOp.add(questionCounter++,question,answer,points,subject,dif,type);
          		System.out.println("Soru başarıyla eklendi.");
          		UI();
          	 }
@@ -167,29 +167,29 @@ static Scanner input = new Scanner(System.in);
          		 		break;
          		 	}
          		 System.out.println(questionNo+".soru\n");
-         		 if(Question.show(subject,quizName,questionNo,"type") == "MC") {
-         			String questionLine = Question.show(subject,quizName,questionNo,"question");
+         		 if(QuizOp.show(subject,quizName,questionNo,"type") == "MC") {
+         			String questionLine = QuizOp.show(subject,quizName,questionNo,"question");
          			String[] questionSplits = questionLine.split("¿");
          			System.out.println(questionSplits[0]+"\n");
          			System.out.println("A)"+ questionSplits[1]);
          			System.out.println("B)"+ questionSplits[2]);
          			System.out.println("C)"+ questionSplits[3]);
          			System.out.println("D)"+ questionSplits[4] + "\n");
-         			System.out.println("Cevap: "+ Question.show(subject,quizName,questionNo,"answer"));
+         			System.out.println("Cevap: "+ QuizOp.show(subject,quizName,questionNo,"answer"));
          		 }
          		 else {
-         			System.out.println("Cevap: "+ Question.show(subject,quizName,questionNo,"question"));
-         			String answer = Question.show(subject,quizName,questionNo,"answer");
+         			System.out.println("Cevap: "+ QuizOp.show(subject,quizName,questionNo,"question"));
+         			String answer = QuizOp.show(subject,quizName,questionNo,"answer");
          			System.out.println("A) Doğru\nB) Yanlış");
          			if (answer == "True") System.out.println("Cevabı: Doğru"); 
              		else if (answer == "False") System.out.println("Cevabı: Yanlış"); 
          		 }
          		 	
-         			String dif = Question.show(subject,quizName,questionNo,"dif");
+         			String dif = QuizOp.show(subject,quizName,questionNo,"dif");
          			if (dif == "EASY") System.out.println("Zorluk türü: Kolay"); 
              		else if (dif == "MEDİUM") System.out.println("Zorluk türü: Orta"); 
              		else if (dif == "HARD") System.out.println("Zorluk türü: Zor"); 
-         			System.out.println("Puanı: "+ Question.show(subject,quizName,questionNo,"points"));
+         			System.out.println("Puanı: "+ QuizOp.show(subject,quizName,questionNo,"points"));
          			UI();
          	 }
          	 
@@ -214,19 +214,19 @@ static Scanner input = new Scanner(System.in);
           			
           			String newAnswer = null;
           			System.out.println("Güncel soru metni ve cevabı: \n");
-          			if(Question.show(subject,quizName,questionNo,"type") == "MC") {
-             			String questionLine = Question.show(subject,quizName,questionNo,"question");
+          			if(QuizOp.show(subject,quizName,questionNo,"type") == "MC") {
+             			String questionLine = QuizOp.show(subject,quizName,questionNo,"question");
              			String[] questionSplits = questionLine.split("¿");
              			System.out.println(questionSplits[0]+"\n");
              			System.out.println("A)"+ questionSplits[1]);
              			System.out.println("B)"+ questionSplits[2]);
              			System.out.println("C)"+ questionSplits[3]);
              			System.out.println("D)"+ questionSplits[4] + "\n");
-             			System.out.println("Cevap: "+ Question.show(subject,quizName,questionNo,"answer"));
+             			System.out.println("Cevap: "+ QuizOp.show(subject,quizName,questionNo,"answer"));
              		 }
              		 else {
-             			System.out.println("Cevap: "+ Question.show(subject,quizName,questionNo,"question"));
-             			String answer = Question.show(subject,quizName,questionNo,"answer");
+             			System.out.println("Cevap: "+ QuizOp.show(subject,quizName,questionNo,"question"));
+             			String answer = QuizOp.show(subject,quizName,questionNo,"answer");
              			System.out.println("A) Doğru\nB) Yanlış");
              			if (answer == "True") System.out.println("Cevabı: Doğru"); 
                  		else if (answer == "False") System.out.println("Cevabı: Yanlış"); 
@@ -234,7 +234,7 @@ static Scanner input = new Scanner(System.in);
           			System.out.println("Yeni soru metnini giriniz.");
           			String question = input.nextLine();
           			
-          			if(Question.show(subject,quizName,questionNo,"type") == "MC") {
+          			if(QuizOp.show(subject,quizName,questionNo,"type") == "MC") {
              			System.out.println("A şıkkını giriniz.");
              			String choicesA = input.nextLine();
              			System.out.println("B şıkkını giriniz.");
@@ -273,7 +273,7 @@ static Scanner input = new Scanner(System.in);
                      		}
                  		}
              		}
-             		else if(Question.show(subject,quizName,questionNo,"type") == "TF") {
+             		else if(QuizOp.show(subject,quizName,questionNo,"type") == "TF") {
              			System.out.println("Sorunun cevabını seçiniz.");
              			System.out.println("1) Doğru");
                  		System.out.println("2) Yanlış");
@@ -295,7 +295,7 @@ static Scanner input = new Scanner(System.in);
                  		}
              		}
           			System.out.println("Quizin güncel toplam puanı: "+ pointsCounter);
-          			System.out.println("Sorunun güncel puanı: "+ Question.show(subject,quizName,questionNo,"points"));
+          			System.out.println("Sorunun güncel puanı: "+ QuizOp.show(subject,quizName,questionNo,"points"));
           			System.out.print("Sorunun puanını giriniz.");
              		int points = input.nextInt();
              		this.pointsCounter += points;
@@ -322,18 +322,18 @@ static Scanner input = new Scanner(System.in);
              		System.out.println("2) Orta");
              		System.out.println("3) Zor");
              		int difNo = input.nextInt();
-             		Question.Difficulty dif = null;
-             		if (difNo == 1) dif = Question.Difficulty.Easy;
-             		else if (difNo == 2) dif = Question.Difficulty.Medium;
-             		else if (difNo == 3) dif = Question.Difficulty.Hard;
+             		QuizOp.Difficulty dif = null;
+             		if (difNo == 1) dif = QuizOp.Difficulty.Easy;
+             		else if (difNo == 2) dif = QuizOp.Difficulty.Medium;
+             		else if (difNo == 3) dif = QuizOp.Difficulty.Hard;
              		else {
              			System.out.println("Geçerli bir değer giriniz.");
              			UI();
              		}
-             		Question.change(this.subject,quizName,questionNo,"question",question);
-             		Question.change(this.subject,quizName,questionNo,"answer",newAnswer);
-             		Question.change(this.subject,quizName,questionNo,dif);
-             		Question.change(this.subject,quizName,questionNo,points);
+             		QuizOp.change(this.subject,quizName,questionNo,"question",question);
+             		QuizOp.change(this.subject,quizName,questionNo,"answer",newAnswer);
+             		QuizOp.change(this.subject,quizName,questionNo,dif);
+             		QuizOp.change(this.subject,quizName,questionNo,points);
              		System.out.println("Soru başarıyla değiştirildi.");
              		UI();
           		}
@@ -342,24 +342,24 @@ static Scanner input = new Scanner(System.in);
           			
           			String newAnswer = null;          			
           			System.out.println("Güncel soru metni ve cevabı: \n");
-          			if(Question.show(subject,quizName,questionNo,"type") == "MC") {
-             			String questionLine = Question.show(subject,quizName,questionNo,"question");
+          			if(QuizOp.show(subject,quizName,questionNo,"type") == "MC") {
+             			String questionLine = QuizOp.show(subject,quizName,questionNo,"question");
              			String[] questionSplits = questionLine.split("¿");
              			System.out.println(questionSplits[0]+"\n");
              			System.out.println("A)"+ questionSplits[1]);
              			System.out.println("B)"+ questionSplits[2]);
              			System.out.println("C)"+ questionSplits[3]);
              			System.out.println("D)"+ questionSplits[4] + "\n");
-             			System.out.println("Cevap: "+ Question.show(subject,quizName,questionNo,"answer"));
+             			System.out.println("Cevap: "+ QuizOp.show(subject,quizName,questionNo,"answer"));
              		 }
              		 else {
-             			System.out.println("Cevap: "+ Question.show(subject,quizName,questionNo,"question"));
-             			String answer = Question.show(subject,quizName,questionNo,"answer");
+             			System.out.println("Cevap: "+ QuizOp.show(subject,quizName,questionNo,"question"));
+             			String answer = QuizOp.show(subject,quizName,questionNo,"answer");
              			System.out.println("A) Doğru\nB) Yanlış");
              			if (answer == "True") System.out.println("Cevabı: Doğru"); 
                  		else if (answer == "False") System.out.println("Cevabı: Yanlış"); 
              		 }
-          			if(Question.show(subject,quizName,questionNo,"type") == "MC") {
+          			if(QuizOp.show(subject,quizName,questionNo,"type") == "MC") {
              			System.out.println("Sorunun cevabını seçiniz.");
              			System.out.println("1) A");
                  		System.out.println("2) B");
@@ -410,13 +410,13 @@ static Scanner input = new Scanner(System.in);
                  			}
                  		}
              		}
-          			Question.change(this.subject,quizName,questionNo,"answer",newAnswer);
+          			QuizOp.change(this.subject,quizName,questionNo,"answer",newAnswer);
           			System.out.println("Cevap başarıyla değiştirildi.");
           		}
           		
           		else if(choice2 == 3) {
           			System.out.println("Quizin güncel toplam puanı: "+ pointsCounter);
-          			System.out.println("Sorunun güncel puanı: "+ Question.show(subject,quizName,questionNo,"points"));
+          			System.out.println("Sorunun güncel puanı: "+ QuizOp.show(subject,quizName,questionNo,"points"));
           			System.out.println("Sorunun puanını giriniz.");
              		int points = input.nextInt();
              		this.pointsCounter += points;
@@ -440,7 +440,7 @@ static Scanner input = new Scanner(System.in);
           		}
           		
           		else if(choice2 == 4) {
-          			String dif = Question.show(subject,quizName,questionNo,"dif");
+          			String dif = QuizOp.show(subject,quizName,questionNo,"dif");
          			if (dif == "EASY") System.out.println("Güncel zorluk türü: Kolay"); 
              		else if (dif == "MEDİUM") System.out.println("Güncel zorluk türü: Orta"); 
              		else if (dif == "HARD") System.out.println("Güncel zorluk türü: Zor"); 
@@ -449,15 +449,15 @@ static Scanner input = new Scanner(System.in);
              		System.out.println("2) Orta");
              		System.out.println("3) Zor");
              		int difNo = input.nextInt();
-             		Question.Difficulty newDif = null;
-             		if (difNo == 1) newDif = Question.Difficulty.Easy;
-             		else if (difNo == 2) newDif = Question.Difficulty.Medium;
-             		else if (difNo == 3) newDif = Question.Difficulty.Hard;
+             		QuizOp.Difficulty newDif = null;
+             		if (difNo == 1) newDif = QuizOp.Difficulty.Easy;
+             		else if (difNo == 2) newDif = QuizOp.Difficulty.Medium;
+             		else if (difNo == 3) newDif = QuizOp.Difficulty.Hard;
              		else {
              			System.out.println("Geçerli bir değer giriniz.");
              			UI();
              		}
-             		Question.change(this.subject,quizName,questionNo,newDif);
+             		QuizOp.change(this.subject,quizName,questionNo,newDif);
              		System.out.println("Soru başarıyla değiştirildi.");
           		}
           		else {
@@ -478,7 +478,7 @@ static Scanner input = new Scanner(System.in);
         				System.out.println("1) Evet\n2) Hayır");
         				int choice2 = input.nextInt();
         				if(choice2 == 1) {
-        							Question.remove(subject, quizName, questionNo);
+        					QuizOp.remove(subject, quizName, questionNo);
         							questionCounter--;
         							System.out.println("Soru başarıyla silindi.");
         							UI();
@@ -496,7 +496,7 @@ static Scanner input = new Scanner(System.in);
  				System.out.println("1) Evet\n2) Hayır");
  				int choice2 = input.nextInt();
  				if(choice2 == 1) {
- 							Question.removeQuiz(subject, quizName, questionCounter);
+ 					QuizOp.removeQuiz(subject, quizName, questionCounter);
  							System.out.println("Soru başarıyla silindi.");
  							UI();
  				}
@@ -513,7 +513,7 @@ static Scanner input = new Scanner(System.in);
      				int choice2 = input.nextInt();
      				
      				if(choice2 == 1) {
-     							Question.finishQuiz(subject, quizName);
+     					QuizOp.finishQuiz(subject, quizName);
      							System.out.println("Quiz başarıyla oluşturuldu.");
      							UI();
      				}

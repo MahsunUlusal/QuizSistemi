@@ -1,7 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
 
-import User.Role;
 class Student{
 	
 	String name,sName,userName;

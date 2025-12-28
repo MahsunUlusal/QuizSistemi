@@ -36,7 +36,7 @@ class Teacher{
              
           	 case 1:{
           		 System.out.println("Görüntülemek istediğniz quizi seçiniz.\n");
-          		 quizes = Question.quizList(userName,subject);
+          		 quizes = QuizOp.quizList(userName,subject);
           		 System.out.println("Quizleriniz: \n");
           		 for(int i=0; i<quizes.size() ; i++)
           		 System.out.println((i+1)+")"+quizes.get(i));
@@ -48,36 +48,41 @@ class Teacher{
         			else
         		 		break;
         		 	}
-          		 String quizName = quizes.get(quizChoice-1);
-          		 Question.showAllQuiz(subject,quizName,userName,password,null);
+          		String quizName = quizes.get(quizChoice-1);
+          		QuizOp.showAllQuiz(subject,quizName,userName,password,null);
+          		UI();
           		 check = false;
           		 break;
-          	 }
-              
+          	 } 
           	 case 2:{
           		System.out.println("Quizin ismini giriniz.");
          		String quizName = input.nextLine();
-         		 Quiz quiz = new Quiz (quizName,subject,userName);
+         		Quiz quiz = new Quiz (quizName,subject,userName);
+         		UI();
                 check = false;
                 break;
           	 }
-          	 
-          	 case 3:
-                
+          	 case 3:{
+          		System.out.println("Görüntülemek istediğniz öğrencinin ismini giriniz.\n");
+          		String stName = input.nextLine();
+          		System.out.println("Öğrencinin soy ismini giriniz.\n");
+          		String stSName = input.nextLine();
+         		QuizOp.scoresList(userName,password,stName,stSName);
+         		UI();
                 check = false;
                 break;
-          	 
-          	 case 4:
-          		 Main.logIO();
+          	 }
+          	 case 4:{
+          		Main.logIO();
                 check = false;
                 break;
-                
+          	 }
              default:
               System.out.println("Geçerli bir değer giriniz. (1, 2, 3, 4 veya 5)");
               System.out.println("Yapmak istediğin işlemi giriniz.");
               choice = input.nextInt();
           }
-         }      
+        }      
 	}
 	
 	
