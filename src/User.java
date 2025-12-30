@@ -56,7 +56,7 @@ abstract class User implements FileOp{
 	}
 	public static void change(String userName, long password, String target, String newTarget ) {
 			
-			File users = new File("Users.txt");
+			File users = new File("users.txt");
 	        File newUsers = new File("temp.txt");
 			
 	        try (BufferedReader br = new BufferedReader(new FileReader(users)); BufferedWriter bw = new BufferedWriter(new FileWriter(newUsers))){
@@ -70,7 +70,7 @@ abstract class User implements FileOp{
 	        			 
 	 					if(splits[0].equals(userName) && splits[1].equals(passwordString)) {
 	 						
-	 						if(User.show(userName,password,"role")=="Teacher") {
+	 						if(User.show(userName,password,"role").equals("Teacher")) {
 	 							
 	 							switch(target) {
 	 						
@@ -131,14 +131,8 @@ abstract class User implements FileOp{
 	 				}
 
 	 					else {
-	 						if(User.show(userName,password,"role")=="Teacher"){
-	 							bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5]);
-	 							bw.newLine();
-	 						}
-	 						else {
-	 							bw.write(splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4]);
-	 							bw.newLine();
-	 						}
+	 						bw.write(line);
+	 						bw.newLine();
 	 					}
 	        	 }
 	        }   	 
@@ -148,7 +142,6 @@ abstract class User implements FileOp{
 	        }
 	        users.delete();
 	        newUsers.renameTo(users);
-	        System.out.println("Başarıyla değiştirildi");
 	}	
 	public static String show (String userName, long password, String target) {
 			
@@ -213,7 +206,7 @@ abstract class User implements FileOp{
 	}	
 	public static void remove(String userName,long password) {
 		
-		File users = new File("Users.txt");
+		File users = new File("users.txt");
         File newUsers = new File("temp.txt");
 		
         try (BufferedReader br = new BufferedReader(new FileReader(users)); BufferedWriter bw = new BufferedWriter(new FileWriter(newUsers))){
@@ -226,29 +219,31 @@ abstract class User implements FileOp{
         		 if(splits.length >=5) {
         			 
  					if(splits[0].equals(userName) && splits[1].equals(passwordString)) {
- 						bw.newLine();
  						continue;
  						}
 
  					else {
- 						if(User.show(userName,password,"role")=="Teacher"){
- 							bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +";"+ splits[5] +"\n");
- 							bw.newLine();
- 						}
- 						else {
- 							bw.write(splits[0] +";"+ splits[1] +";"+ splits[2] +";"+ splits[3] +";"+ splits[4] +"\n");
- 							bw.newLine();
- 						}
+ 						bw.write(line);
+ 						bw.newLine();;
+ 						
  					}
-        	 }
-        }   	 
-	}
+        		 }
+        		 else {
+        			 System.out.println("Hata: Bozuk dosya yapısı.");
+        		 }
+        	 }   
+        }
         catch (IOException e) {
         System.out.println("Hata: " + e.getMessage());
         }
-        users.delete();
-        newUsers.renameTo(users);
-        System.out.println("Başarıyla silindi");
+        if (users.delete()) {
+            if(newUsers.renameTo(users)) 
+                 System.out.println("Başarıyla silindi.");
+            
+            }
+         else 
+            System.out.println("Eski dosya silinemedi (Dosya açık olabilir).");
+        
+    }
 	}
 	
-}
