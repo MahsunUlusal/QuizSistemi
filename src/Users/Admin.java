@@ -1,22 +1,50 @@
-import java.util.Scanner;
+package Users;
 import java.util.InputMismatchException;
+import java.util.Scanner;
+import FileOp.QuizOp;
+import FileOp.UserOp;
+import Main.Main;
 
 
-public class Admin{
+public class Admin implements User{
 	
     static Scanner input = new Scanner(System.in);
-    String name,sName,userName;
-	long password;
+    private String name,sName,userName;
+	private long password;
+	QuizOp quizOp = new QuizOp();
+	UserOp userOp = new UserOp();
 	
-    public Admin(String name,String sName,String userName,long password) throws Exception{
+    public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getsName() {
+		return sName;
+	}
+	public void setsName(String sName) {
+		this.sName = sName;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public long getPassword() {
+		return password;
+	}
+	public void setPassword(long password) {
+		this.password = password;
+	}
+	public Admin(String name,String sName,String userName,long password) throws Exception{
     	this.name = name;
 		this.sName = sName;
 		this.userName = userName;
 		this.password = password;
-	     System.out.println("          Hoş geldiniz ");
-		UI();
    }
-   private static void UI() { //neden
+   public void UI() {
 	   try {
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
          System.out.println("1) Kullanıcı ekle.");
@@ -71,7 +99,7 @@ public class Admin{
 		   UI();
 	   }
    }
-   private static void removeUser() {
+   private void removeUser() {
 	   
 	   try {
 		System.out.println("Silmek istediğiniz kullanıcının kullanıcı adını giriniz.");
@@ -85,7 +113,7 @@ public class Admin{
 			   int choice = input.nextInt();
 
 			   if(choice == 1) { 
-				   User.remove(userName,password);
+				   userOp.remove(userName,password);
 				   UI();
 				   }
 			   else if(choice == 2) UI();
@@ -98,10 +126,10 @@ public class Admin{
 	   } catch (Exception e) {
 		   input.next();
 		   System.out.println("Hata!");
-		   Admin.UI();
+		   UI();
 	   }
    }
-   private static void showUser(){
+   private void showUser(){
 	   try {
 		System.out.println("Görüntülemek istediğiniz kullanıcının kullanıcı adını giriniz.");
 		   String userName = input.nextLine();
@@ -115,7 +143,7 @@ public class Admin{
 			  System.out.println("2) Soy ismi");
 			  System.out.println("3) Kullanıcı ismi");
 			  System.out.println("4) Şifresi");
-		   		if(User.show(userName,password,"role").equals("Teacher")) {
+		   		if(userOp.show(userName,password,"role").equals("Teacher")) {
 		   			System.out.println("5) Girdiği ders");
 		   			System.out.println("6) Geri");
 		   		}
@@ -132,12 +160,12 @@ public class Admin{
 		   			switch(choice){
 		         
 		   			case 1:
-		   				System.out.println(User.show(userName,password,"name"));
+		   				System.out.println(userOp.show(userName,password,"name"));
 		   				check = false;
 		   				break;
 		          
 		   			case 2:
-		      		 System.out.println(User.show(userName,password,"sName"));
+		      		 System.out.println(userOp.show(userName,password,"sName"));
 		      		 check = false;
 		      		 break;
 		      	 
@@ -152,15 +180,15 @@ public class Admin{
 		   				break;
 		            
 		   			case 5:
-		   				if(User.show(userName,password,"role").equals("Teacher")) {
-		   					System.out.println(User.show(userName,password,"subject"));
+		   				if(userOp.show(userName,password,"role").equals("Teacher")) {
+		   					System.out.println(userOp.show(userName,password,"subject"));
 		   				}
 			       		else UI();	
 		   				check = false;
 		   				break;
 		          
 		   			case 6:
-		   				if(User.show(userName,password,"role").equals("Teacher")) {
+		   				if(userOp.show(userName,password,"role").equals("Teacher")) {
 		   					UI();
 			                check = false;
 			                break;
@@ -185,11 +213,11 @@ public class Admin{
 		   }
 	   } catch (Exception e) {
 		   System.out.println("Hata!");
-		   input.next();
+		   input.nextLine();
 		   UI();
 	   }
    }
-   private static void addUser(){
+   private void addUser(){
        try {
 		System.out.println("Hangi tür kullanıcı eklemek istersiniz?");
 		   System.out.println("1) Öğretmen");
@@ -225,7 +253,7 @@ public class Admin{
 		                			}
 		                		System.out.println("Öğretmenin şifresini giriniz. (Sadece sayılardan oluşabilir)");
 		                		long password = input.nextLong();
-		                		User.add(name,sName,userName,password,subject,User.Role.Teacher);
+		                		userOp.add(name,sName,userName,password,subject,UserOp.Role.Teacher);
 		                		UI();
 		                	}
 		                	else {
@@ -263,7 +291,7 @@ public class Admin{
 		            			}
 		               		System.out.println("Öğrencinin şifresini giriniz. (Sadece sayılardan oluşabilir)");
 		               		long password = input.nextLong();
-		               		User.add(name,sName,userName,password,User.Role.Student);
+		               		userOp.add(name,sName,userName,password,UserOp.Role.Student);
 		               	}
 		               	else {
 		               		System.out.println("Öğrenci halihazırda mevcut.");
@@ -298,7 +326,7 @@ public class Admin{
 		            			}
 		               		System.out.println("Adminin şifresini giriniz. (Sadece sayılardan oluşabilir)");
 		               		long password = input.nextLong();
-		                    User.add(name,sName,userName,password,User.Role.Admin);
+		                    userOp.add(name,sName,userName,password,UserOp.Role.Admin);
 		                    UI();
 		               	}
 		               	else {
@@ -333,7 +361,7 @@ public class Admin{
 	   }
       
    }
-   private static void changeUser() { 
+   private void changeUser() { 
 	  
 	   try {
 		System.out.println("Değiştirmek istediğiniz kullanıcının kullanıcı adını giriniz.");
@@ -348,7 +376,7 @@ public class Admin{
 			  System.out.println("2) Soy ismi");
 			  System.out.println("3) Kullanıcı ismi");
 			  System.out.println("4) Şifresi");
-		   		if(User.show(userName,password,"role").equals("Teacher")) {
+		   		if(userOp.show(userName,password,"role").equals("Teacher")) {
 		   			System.out.println("5) Girdiği ders");
 		   			System.out.println("6) Geri");
 		   		}
@@ -367,7 +395,7 @@ public class Admin{
 		   			case 1:
 		   				System.out.println("Kullanıcının ismini giriniz.");
 		   				String newName = input.nextLine();
-		   				User.change(userName,password,"name",newName);
+		   				userOp.change(userName,password,"name",newName);
 		   				UI();
 		   				check = false;
 		   				break;
@@ -375,7 +403,7 @@ public class Admin{
 		   			case 2:
 		      		 System.out.println("Kullanıcının soy ismini giriniz.");
 		      		 String newSName = input.nextLine();
-		      		 User.change(userName,password,"sName",newSName);
+		      		 userOp.change(userName,password,"sName",newSName);
 		      		 UI();
 		      		 check = false;
 		      		 break;
@@ -383,7 +411,7 @@ public class Admin{
 		   			case 3:
 		   				System.out.println("Kullanıcının kullanıcı adını giriniz.");
 		   				String newUserName = input.nextLine();
-		   				User.change(userName,password,"userName",newUserName);
+		   				userOp.change(userName,password,"userName",newUserName);
 		   				UI();
 		   				check = false;
 		   				break;
@@ -392,17 +420,17 @@ public class Admin{
 		   				System.out.println("Kullanıcının şifresini giriniz.");
 		   				long newPassword = input.nextLong();
 		   				String passwordString = Long.toString(newPassword);
-		   				User.change(userName,password,"password",passwordString);
+		   				userOp.change(userName,password,"password",passwordString);
 		   				UI();
 		   				check = false;
 		   				break;
 		            
 		   			case 5:
-		   				if(User.show(userName,password,"role").equals("Teacher")) {
+		   				if(userOp.show(userName,password,"role").equals("Teacher")) {
 		   					System.out.println("Ders ismini giriniz.");
 		   					String newSubject;
 		   					newSubject = input.nextLine();
-		   					User.change(userName,password,"subject",newSubject);
+		   					userOp.change(userName,password,"subject",newSubject);
 		   					UI();
 		   				}
 			       		else UI();	

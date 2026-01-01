@@ -1,0 +1,5 @@
+Matematik#MatQuiz1
+Fizik#FizikQuiz1
+Tarih#TarihQuiz1
+Kimya#KimyaQuiz1
+Biyoloji#BiyoQuiz1

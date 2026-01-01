@@ -1,0 +1,8 @@
+MahsunUlsl;563421;Mahsun;Ulusal;Admin
+ahmetHoca;1234;Ahmet;Yilmaz;Teacher;Matematik
+ayseHoca;1234;Ayse;Demir;Teacher;Fizik
+mehmetHoca;1234;Mehmet;Kaya;Teacher;Tarih
+zeynepHoca;1234;Zeynep;Celik;Teacher;Kimya
+fatmaHoca;1234;Fatma;Ozturk;Teacher;Biyoloji
+ali123;1234;Ali;Can;Student
+veli456;1234;Veli;Han;Student

@@ -1,0 +1,1 @@
+ahmetHoca|MatQuiz1|1#Aşağıdakilerden hangisi bir asal sayıdır?¿1¿4¿9¿17#D#20#Easy#MC*2#Bir üçgenin iç açıları toplamı 180 derecedir.#True#20#Easy#TF*3#5x - 10 = 20 denkleminde x kaçtır?¿4¿5¿6¿7#C#20#Medium#MC*4#Pi sayısı tam olarak 3'e eşittir.#False#20#Medium#TF*5#Hangi sayının karesi 144'tür?¿10¿11¿12¿13#C#20#Hard#MC*

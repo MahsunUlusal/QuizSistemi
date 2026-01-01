@@ -1,0 +1,1 @@
+ayseHoca|FizikQuiz1|1#Kuvvetin birimi nedir?¿Joule¿Newton¿Pascal¿Watt#B#20#Easy#MC*2#Işık boşlukta yayılabilir.#True#20#Easy#TF*3#Potansiyel enerji formülü hangisidir?¿mgh¿1/2mv2¿ma¿Fd#A#20#Medium#MC*4#Suyun kaldırma kuvvetini Arşimet bulmuştur.#True#20#Medium#TF*5#Atomun çekirdeğinde hangisi bulunmaz?¿Proton¿Nötron¿Elektron¿Kuark#C#20#Hard#MC*

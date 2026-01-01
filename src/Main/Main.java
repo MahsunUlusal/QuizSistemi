@@ -1,41 +1,54 @@
-import java.util.Scanner;
+package Main;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
+import FileOp.UserOp;
+import Users.Admin;
+import Users.Student;
+import Users.Teacher;
 
 public class Main {
-
+	
 	public static void main(String[] args) throws Exception {
 		logIO();
 	}
 	
-	public static void logIO() {  // neden throws eklemem lazım?
+	public static void logIO() {
+		UserOp userOp = new UserOp();
 		try {
 			String userName;
 			long password;
-			Scanner input = new Scanner(System.in);
-			System.out.println("Kullanıcı adınızı giriniz.");
-			userName = input.nextLine();
-			System.out.println("Şifrenizi giriniz.");
-			String passwordStr = input.nextLine().trim();
-			password = Long.parseLong(passwordStr);
+			try (Scanner input = new Scanner(System.in)) {
+				System.out.println("Kullanıcı adınızı giriniz.");
+				userName = input.nextLine();
+				System.out.println("Şifrenizi giriniz.");
+				String passwordStr = input.nextLine().trim();
+				password = Long.parseLong(passwordStr);
+			}
 			if(isExist(userName,password)) {
-				String name = User.show(userName,password,"name");
-				String sName = User.show(userName,password,"sName");        	
-				String role = User.show(userName,password,"role");
+				String name = userOp.show(userName,password,"name");
+				String sName = userOp.show(userName,password,"sName");        	
+				String role = userOp.show(userName,password,"role");
 				
 				switch(role){
 					
 				case "Teacher":
-					String subject = User.show(userName,password,"subject");
+					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
+					String subject = userOp.show(userName,password,"subject");
 					Teacher teacher = new Teacher(name,sName,userName,password,subject);
+					teacher.UI();
 					break;
 					
 				case "Student":
+					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
 					Student student = new Student(name,sName,userName,password);
+					student.UI();
 					break;
 					
 				case "Admin":
+					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
 					Admin admin = new Admin(name,sName,userName,password);
+					admin.UI();
 					break;
 					
 				default:
@@ -59,7 +72,7 @@ public class Main {
 		
 		try {	
 			
-			File users = new File("users.txt");
+			File users = new File("txt/users.txt");
 			Scanner fileInput = new Scanner(users);
 		
 			while(fileInput.hasNextLine()) {
@@ -87,7 +100,7 @@ public class Main {
 		
 		try {
 			
-			File users = new File("users.txt");
+			File users = new File("txt/users.txt");
 			Scanner fileInput = new Scanner(users);
 	
 			while(fileInput.hasNextLine()) {
@@ -117,7 +130,7 @@ public class Main {
 		
 		try {
 			
-			File users = new File("users.txt");
+			File users = new File("txt/users.txt");
 			Scanner fileInput = new Scanner(users);
 	
 			while(fileInput.hasNextLine()) {
