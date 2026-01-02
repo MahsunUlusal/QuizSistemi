@@ -18,7 +18,9 @@ import java.util.Scanner;
 		}
 		
 		Role role;
-		QuizOp quizOp = new QuizOp();
+		
+		
+		
 		public void add(String name, String sName, String userName, long password, Role role ) {
 			String roleTr;
 			if(role==Role.Student) roleTr="Öğrenci";
@@ -34,6 +36,7 @@ import java.util.Scanner;
 	           System.out.println(roleTr + " eklenemedi.\n");
 	       }
 			if(role == Role.Student) {
+				QuizOp quizOp = new QuizOp();
 				quizOp.scoreListForNewStd(userName,name,sName);
 			}
 			
@@ -67,7 +70,7 @@ import java.util.Scanner;
 		        			 
 		 					if(splits[0].equals(userName) && splits[1].equals(passwordString)) {
 		 						
-		 						if(show(userName,password,"role").equals("Teacher")) {
+		 						if(splits.length == 6 && splits[5].equals("Teacher")) {
 		 							
 		 							switch(target) {
 		 						
@@ -92,7 +95,7 @@ import java.util.Scanner;
 		 								break;
 		 								
 		 							case "subject":
-		 								bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ newTarget +";"+ splits[5]);
+		 								bw.write(splits[0] +";"+ splits[1]  +";"+ splits[2] +";"+ splits[3] +";"+ newTarget +";"+ splits[5]  );
 		 								System.out.println("Başarıyla değiştirildi.");
 		 								break;
 		 								
@@ -134,11 +137,15 @@ import java.util.Scanner;
 		        	 }
 		        }   	 
 			}
+		        
 		        catch (IOException e) {
 	            System.out.println("Hata: " + e.getMessage());
 		        }
 		        users.delete();
 		        newUsers.renameTo(users);
+		       
+		        
+		        
 		}	
 		public String show (String userName, long password, String target) {
 				
@@ -177,15 +184,12 @@ import java.util.Scanner;
 									return splits[3];
 									
 								case "role":
-									if(splits.length==5) {
-										fileInput.close();
-										return splits[4];
-									}
-									else {
+									if(splits.length==6) {
 										fileInput.close();
 										return splits[5];
 									}
-									
+									else
+										return splits[4];
 								default:
 									System.out.println("Hata!");
 									fileInput.close();

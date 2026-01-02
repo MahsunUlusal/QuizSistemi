@@ -14,7 +14,6 @@ import Main.Main;
 
 
 public class QuizOp extends FileOp{
-	UserOp userOp = new UserOp();
 	
 	static Scanner input = new Scanner(System.in);
 	
@@ -392,6 +391,7 @@ public class QuizOp extends FileOp{
 	}
 
 	public void showAllQuiz(String subject, String quizName, String userName, long password, List<String> answers) {
+		UserOp userOp = new UserOp();
 		File quiz = new File("txt/"+subject+".txt");
 		try (Scanner fileInput = new Scanner(quiz)){
 			while(fileInput.hasNextLine()) {
@@ -472,6 +472,7 @@ public class QuizOp extends FileOp{
 	}
 
 	public void scoresList(String userName,long password, String name, String sName){
+		UserOp userOp = new UserOp();
 		if(Main.isExist(name,sName)) {
 			if("Teacher".equals(userOp.show(userName, password, "role"))) { 
 				File scores = new File("txt/scores.txt");
@@ -770,7 +771,7 @@ public class QuizOp extends FileOp{
 
 	}
 
-	private int calcScore(String subject, String quizName, List<String> answers) {
+	public int calcScore(String subject, String quizName, List<String> answers) {
 		int score=0;
 		for(int i=0;i<answers.size();i++) {
 			String pointsString = show(subject, quizName, i+1, "points");
