@@ -3,8 +3,8 @@ ali123|Ali|Can|Fizik#FizikQuiz1#-1
 ali123|Ali|Can|Tarih#TarihQuiz1#-1
 ali123|Ali|Can|Kimya#KimyaQuiz1#-1
 ali123|Ali|Can|Biyoloji#BiyoQuiz1#-1
-veli456|Veli|Han|Matematik#MatQuiz1#-1
-veli456|Veli|Han|Fizik#FizikQuiz1#-1
+veli456|Veli|Han|Matematik#MatQuiz1#60
+veli456|Veli|Han|Fizik#FizikQuiz1#40
 veli456|Veli|Han|Tarih#TarihQuiz1#-1
 veli456|Veli|Han|Kimya#KimyaQuiz1#-1
 veli456|Veli|Han|Biyoloji#BiyoQuiz1#-1

@@ -577,7 +577,7 @@ public class QuizOp extends FileOp{
 		if(Main.isExist(name,sName)) { // öğrenci mevcut mu
 			if("Teacher".equals(userOp.show(userName, password, "role"))) { // fonksiyonu çağıran öğretmen ise
 				File scores = new File("txt/scores.txt");
-				System.out.println(userOp.show(userName, password, "subject") +"\n\n");
+				System.out.println("\n"+userOp.show(userName, password, "subject") +"\n\n");
 				try (Scanner fileInput = new Scanner(scores)){
 					while(fileInput.hasNextLine()) {
 						String line = fileInput.nextLine();
@@ -623,7 +623,7 @@ public class QuizOp extends FileOp{
 	                }
 	                
 	                for(int i=0; i<subjects.size(); i++) { // burda ders sayısı kadar döngüye girer
-	                    System.out.println(subjects.get(i)+":\n"); // ders ismini yazdırır
+	                    System.out.println("\n"+subjects.get(i)+":\n"); // ders ismini yazdırır
 	                    
 	                    for(int j=0; j<quizData.size(); j++) {
 	                        String[] splits = quizData.get(j).split("\\|"); 
@@ -761,12 +761,12 @@ public class QuizOp extends FileOp{
 										answer = input.nextLine();
 										switch(answer) {//cevabın true ya da false şeklinde tutulmasını sağlar
 											case "a","A": 
-												answer = "A"; 
+												answer = "True"; 
 												check = false; 
 												break;
 												
 											case "b","B": 
-												answer = "B"; 
+												answer = "False"; 
 												check = false; 
 												break;
 												
@@ -857,10 +857,10 @@ public class QuizOp extends FileOp{
 										while(check) {
 										newAns = input.nextLine();
 										if(newAns.equalsIgnoreCase("a")) { 
-											newAns="A"; 
+											newAns="True"; 
 											check = false; 
 										}
-										else if(newAns.equalsIgnoreCase("b")) {
+										else if(newAns.equalsIgnoreCase("False")) {
 											newAns="B";
 											check = false; 
 										}

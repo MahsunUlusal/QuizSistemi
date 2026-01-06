@@ -101,7 +101,7 @@ public class Student implements User{
                                 String quizesWsubjectLine = quizesWsubject.get(i);
                                 String quizes[] = quizesWsubjectLine.split("\\#"); 
                                 if(quizes.length > 1) {
-                                    System.out.println((i+1) + ") Ders: " + quizes[0]+ "Quiz ismi: "+quizes[1]);
+                                    System.out.println("\n"+(i+1) + ") Ders: " + quizes[0]+ "  Quiz ismi: "+quizes[1]);
                                 } else {
                                     System.out.println(" Hatalı dosya yapısı!");
                                 }

@@ -20,40 +20,39 @@ public class Main {
 	 * Giriş yapma fonksiyonu kullanıcıdan kullanıcı adı ve şifresini alarak sistemde olup olmadığını kontrol eder eğer varsa rolüne uygun nesne oluşturarak UI(Arayüz) fonksiyonunu çağırır.
 	 */
 	public static void logIO() {
-		//kullanıcıdan verileri alır, rolüne göre nesne oluşturur ve arayüzünü çağırır.
 		UserOp userOp = new UserOp();
 		try {
 			String userName;
 			long password;
-			try (Scanner input = new Scanner(System.in)) {
-				System.out.println("Kullanıcı adınızı giriniz.");
-				userName = input.nextLine();
-				System.out.println("Şifrenizi giriniz.");
-				String passwordStr = input.nextLine().trim();
-				password = Long.parseLong(passwordStr);
-			}
+			Scanner input = new Scanner(System.in);
+			System.out.println("Kullanıcı adınızı giriniz.");
+			userName = input.nextLine();
+			System.out.println("Şifrenizi giriniz.");
+			String passwordStr = input.nextLine().trim();
+			password = Long.parseLong(passwordStr);
+			
 			if(isExist(userName,password)) {
 				String name = userOp.show(userName,password,"name");
-				String sName = userOp.show(userName,password,"sName");        	
+				String sName = userOp.show(userName,password,"sName"); 	
 				String role = userOp.show(userName,password,"role");
 				
 				switch(role){
 					
 				case "Teacher":
-					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
+					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
 					String subject = userOp.show(userName,password,"subject");
 					Teacher teacher = new Teacher(name,sName,userName,password,subject);
 					teacher.UI();
 					break;
 					
 				case "Student":
-					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
+					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
 					Student student = new Student(name,sName,userName,password);
 					student.UI();
 					break;
 					
 				case "Admin":
-					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
+					System.out.println("\n          Hoş geldiniz "+ name +" "+ sName);
 					Admin admin = new Admin(name,sName,userName,password);
 					admin.UI();
 					break;
@@ -69,10 +68,12 @@ public class Main {
 				System.out.println("\n\nKullanıcı bulunamadı! Kullanıcı adınızı ya da şifreniz yanlış olablir.\n\n");
 				logIO();
 			}
+			input.close();
 		} catch (Exception e) {
 			System.out.println("Hata!");
 			logIO();
 		}
+		
 	}
 	
 	/**
@@ -82,27 +83,21 @@ public class Main {
 	 * @return kullanıcı var ya da yok
 	 */
 	public static boolean isExist(String name,String sName){
-		
 		try {	
-			
-			File users = new File("txt/users.txt");//kullanıcı verilerinin olduğu dosyayı açar
+			File users = new File("txt/users.txt");
 			Scanner fileInput = new Scanner(users);
-		
 			while(fileInput.hasNextLine()) {
 				String line = fileInput.nextLine();
-				String[] splits = line.split(";");// kullanıcı verilerini parçalara ayırır
-			
+				String[] splits = line.split(";");
 				if(splits.length>=4) {
-					if(splits[2].equals(name) && splits[3].equals(sName)) {//aradığımız kullanıcı mı diye kontrol eder
+					if(splits[2].equals(name) && splits[3].equals(sName)) {
 						fileInput.close();
-						return true;//var bilgisi gönderir
+						return true;
 					}
 				}
 			}
-		
 			fileInput.close();
-			return false;//yok bilgisi gönderir
-		
+			return false;
 		}
 		catch (FileNotFoundException e) {
 			return false;
@@ -116,19 +111,13 @@ public class Main {
 	 * @return var ya da yok
 	 */
 	public static boolean isExist(String userName,long password) {
-		//önceki metoddan farklı parametre alarak overload eder
-		//diğer metodla aynı işlemleri yapar fakat kullanıcı adı ve şifre üzerinden
 		try {
-			
 			File users = new File("txt/users.txt");
 			Scanner fileInput = new Scanner(users);
-	
 			while(fileInput.hasNextLine()) {
 				String line = fileInput.nextLine();
 				String[] splits = line.split(";");
-		
 				String passwordString = Long.toString(password);
-		
 				if(splits.length>=4) {
 					if(splits[0].equals(userName) && splits[1].equals(passwordString)) {
 						fileInput.close();
@@ -136,10 +125,8 @@ public class Main {
 						}
 				}
 			}
-
 			fileInput.close();
 			return false;
-		
 		}
 		catch (FileNotFoundException e) {
 			return false;
@@ -152,17 +139,12 @@ public class Main {
 	 * @return var ya da yok
 	 */
 	public static boolean isExist(String userName) {
-		//önceki metodlardan daha az parametre alarak overload eder
-		//diğer metodlarla aynı işlemleri yapar fakat kullanıc üzerinden
 		try {
-			
 			File users = new File("txt/users.txt");
 			Scanner fileInput = new Scanner(users);
-	
 			while(fileInput.hasNextLine()) {
 				String line = fileInput.nextLine();
 				String[] splits = line.split(";");
-
 				if(splits.length>=4) {
 					if(splits[0].equals(userName)) {
 						fileInput.close();
@@ -170,10 +152,8 @@ public class Main {
 						}
 				}
 			}
-
 			fileInput.close();
 			return false;
-		
 		}
 		catch (FileNotFoundException e) {
 			return false;
