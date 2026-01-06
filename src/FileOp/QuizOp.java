@@ -24,6 +24,16 @@ public class QuizOp extends FileOp{
 		Hard,Medium,Easy
 	}
 	
+	/**
+	 * Soruyu dosyaya yazdırma/ekleme fonksiyonu
+	 * @param counter = Quizde yaratılmış kaçıncı soru olduğu 
+	 * @param question = Soru metni
+	 * @param answer = Cevap
+	 * @param points = Sorunun puanı
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli)
+	 * @param dif = Zorluk seviyesi
+	 * @param type = Soru türü
+	 */
 	public void add(int counter, String question, String answer, int points, String subject, Difficulty dif, Type type) {
 		String fileName = "txt/"+ subject + ".txt";
 		try(FileWriter printer = new FileWriter(fileName,true)){
@@ -35,6 +45,14 @@ public class QuizOp extends FileOp{
 		}
 	}
 
+	/**
+	 * Dosyadaki soruyu değiştirme fonksiyonlarından biri. Sorunun soru metnini ya da cevabını düzenler. 
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi. Hangi quizden soru değiştirileceği bilmek için gerekli.
+	 * @param questionNo = Soru numarası.
+	 * @param target = Değiştirilmek istenen veriyi tanımlar.
+	 * @param newTarget = Değiştirilmek istenen verinin son halini tanımlar.
+	 */
 	public void change(String subject,String quizName,int questionNo, String target, String newTarget) {
 		if(target.equals("answer")) {
 			File quiz = new File( "txt/"+subject+".txt");
@@ -136,6 +154,13 @@ public class QuizOp extends FileOp{
 		}
 	}	
 
+	/**
+	 * Dosyadaki soruyu değiştirme fonksiyonlarından biri. Sorunun sorunun zorluk seviyesini düzenler. Difficulty enum tipinde veri aldığı için target değerinin gönderilmesine gerek yoktu,target verinin zorluk derecesi olduğu eblli olur. 
+	 * @param subject  = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli)
+	 * @param quizName = Quiz ismi. Hangi quizden soru değiştirileceği bilmek için gerekli
+	 * @param questionNo = Soru numarası
+	 * @param newTarget = Değiştirilmek istenen verinin son halini tanımlar.
+	 */
 	public void change(String subject, String quizName,int questionNo, Difficulty newTarget) {
 		
 		File quiz = new File( "txt/"+subject+".txt");
@@ -182,6 +207,13 @@ public class QuizOp extends FileOp{
 		newQuiz.renameTo(quiz);
 	}    
 
+	/**
+	 * Dosyadaki soruyu değiştirme fonksiyonlarından biri. Sorunun sorunun puanını düzenler. Int tipinde veri aldığı için target değerinin gönderilmesine gerek yoktu, target verinin puan olduğu belli olur. 
+	 * @param subject  = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi. Hangi quizden soru değiştirileceği bilmek için gerekli.
+	 * @param questionNo = Soru numarası.
+	 * @param newTarget = Değiştirilmek istenen verinin son halini tanımlar.
+	 */
 	public void change(String subject, String quizName,int questionNo, int newTarget) {
 		File quiz = new File( "txt/"+subject+".txt");
 		File newQuiz= new File("txt/temp.txt");
@@ -225,6 +257,12 @@ public class QuizOp extends FileOp{
 		newQuiz.renameTo(quiz);
 	}
 
+	/**
+	 * Soruyu dosyadan silme/kaldırma fonksiyonu
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi. Hangi quizden soru silineceğini bilmek için gerekli.
+	 * @param questionNo = Soru numarası.
+	 */
 	public void remove(String subject, String quizName,int questionNo) {
 		File quiz = new File( "txt/"+subject+".txt");
 		File newQuiz= new File("txt/temp.txt");
@@ -272,6 +310,14 @@ public class QuizOp extends FileOp{
 		newQuiz.renameTo(quiz);
 	}
 
+	/**
+	 * Dosyadaki soruyu gösterme fonksiyonu. Soruyu parça parça gösterir.
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi. Hangi quizden soru görüntüleneceğini bilmek için gerekli.
+	 * @param questionNo = Soru numarası.
+	 * @param target = Görüntülenmek istenen veriyi tanımlar.
+	 * @return Soruyla alakalı istenilen veriyi döndürür.
+	 */
 	public String show(String subject, String quizName,int questionNo, String target) {
 		File quiz = new File( "txt/"+subject+".txt");
 		
@@ -315,6 +361,12 @@ public class QuizOp extends FileOp{
 		return null;
 	}
 
+	/**
+	 * Dosyadaki quizi tamamen kaldırma fonksiyonu.
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi.
+	 * @param questionCounter = Soru sayısı. Fonksiyon için önemi olmadığından kaldırılacaktır. 
+	 */
 	public void removeQuiz(String subject, String quizName, int questionCounter) {
 		File quiz = new File( "txt/"+subject+".txt");
 		File newQuiz= new File("txt/temp.txt");
@@ -340,6 +392,11 @@ public class QuizOp extends FileOp{
 		newQuiz.renameTo(quiz);
 	}
 
+	/**
+	 * Quiz oluşturmayı tamamlama fonksiyonu. Quiz oluşturmayı bitirerek mevcut tüm öğrencilere quizi tanımlar.
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi.
+	 */
 	public void finishQuiz(String subject, String quizName) {
 		String fileName =  "txt/"+subject +".txt";
 		try(FileWriter printer = new FileWriter(fileName,true)){
@@ -380,6 +437,12 @@ public class QuizOp extends FileOp{
 				
 	}
 
+	/**
+	 * Quiz oluşturmayı başlatma fonksiyonu. Ders dosyasının içine quiz bilgilerini yazdırır.
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi.
+	 * @param userName = Öğretmenin kullanıcı adı. Quizi kimin oluşturduğunu tanımlamak için gerekli.
+	 */
 	public void createQuiz(String subject, String quizName, String userName) {
 		String fileName = "txt/"+subject+ ".txt";
 		try(FileWriter printer = new FileWriter(fileName,true)){
@@ -389,7 +452,15 @@ public class QuizOp extends FileOp{
 			System.out.println("Quiz oluşturulamadı!\n");
 		}
 	}
-
+	
+	/**
+	 * Tüm quizi görüntüleme fonksiyonu. Öğretmen için ayrı, öğrenci için ayrı görüntüleme yöntemi vardır.
+	 * @param subject = Quizin hangi derse ait olduğu. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quiz ismi.
+	 * @param userName = Kullanıcı adı. Rol bilgisini almak için gerekli.
+	 * @param password = Şifre. Rol bilgisini almak için gerekli.
+	 * @param answers = Öğrencinin cevaplarını tutan liste.  Öğrencinin cevapları ile görüntüleyebilmesi için gerekli. Öğretmen null gönderir.
+	 */
 	public void showAllQuiz(String subject, String quizName, String userName, long password, List<String> answers) {
 		UserOp userOp = new UserOp();
 		File quiz = new File("txt/"+subject+".txt");
@@ -449,6 +520,12 @@ public class QuizOp extends FileOp{
 		}
 	}
 
+	/**
+	 * Öğretmenin oluşturduğu quizleri döndüren fonksiyon.
+	 * @param subject = Öğretmenin girdiği ders. (Dosyayı bulmak için gerekli.)
+	 * @param userName = Öğretmenin kullanıcı adı
+	 * @return Öğretmenin oluşturduğu quizlerin listesini döndürür.
+	 */
 	public List<String> quizList(String userName, String subject) {
 		List<String> quizes = new ArrayList<>();
 		File quiz = new File("txt/"+subject+".txt");
@@ -471,6 +548,13 @@ public class QuizOp extends FileOp{
 		}	
 	}
 
+	/**
+	 * Bir öğrencinin quiz puanlarını yazdıran fonksiyon. Öğretmen çağırırsa öğretmenin girdiği dersin quizleri listelenir, öğrenci çağırırsa tüm quizler listelenir.
+	 * @param userName = Kullanıcı adı. Kullanıcı bilgilerini görüntülemek için gerekli.
+	 * @param password = Şifre. Kullanıcı bilgilerini görüntülemek için gerekli.
+	 * @param name = Puanları görüntülenecek öğrencinin ismi.
+	 * @param sName = Puanları görüntülenecek öğrencinin soy ismi.
+	 */
 	public void scoresList(String userName,long password, String name, String sName){
 		UserOp userOp = new UserOp();
 		if(Main.isExist(name,sName)) {
@@ -546,6 +630,11 @@ public class QuizOp extends FileOp{
 	    } else { System.out.println("Hata! Öğrenci bulunamadı."); }
 	}
 
+	/**
+	 * Öğrencinin girmediği quizleri ders ismi ile birlikte döndüren fonksiyon.
+	 * @param userName = Öğrencinin kullanıcı adı.
+	 * @return Öğrencinin girmediği quizleri ders ismi ile birlikte döndürür.
+	 */
 	public List<String> unsolvedQuizes(String userName) {
 		List<String> quizes = new ArrayList<>();
 		File scores = new File("txt/scores.txt");
@@ -576,6 +665,13 @@ public class QuizOp extends FileOp{
 		}
 	}
 
+	/**
+	 * Öğrencinin quize girmesini sağlayan fonksiyon. Quize girme arayüzü bu fonksiyon içindedir.
+	 * @param subject = Quizin ait olduğu ders. (Dosyayı bulmak için gerekli.)
+	 * @param quizName = Quizin ismi.
+	 * @param userName = Öğrencinin kullanıcı adı.
+	 * @param password = Öğrencinin şifresi.
+	 */
 	public void enterQuiz(String subject,String quizName, String userName, long password) {
 		
 		try {
@@ -726,6 +822,14 @@ public class QuizOp extends FileOp{
 		}
 	}
 
+	/**
+	 * Öğrencinin quizden aldığı puanın belgeye eklenmesini sağlayan fonksiyon. "-1" olan değeri alınan puan ile değiştirir.
+	 * @param subject = Quizin ait olduğu ders.
+	 * @param quizName = Quizin ismi.
+	 * @param userName = Öğrencinin kullanıcı adı.
+	 * @param password = Öğrencinin şifresi.
+	 * @param score = Quizden alınan puan.
+	 */
 	private void addScore(String userName,long password,String subject, String quizName, int score) {
 		File scores = new File("txt/scores.txt");
 		File newScores= new File("txt/temp.txt");
@@ -771,6 +875,13 @@ public class QuizOp extends FileOp{
 
 	}
 
+	/**
+	 * Öğrencinin quizden aldığı puanı hesaplamaya yarayan fonksiyon.
+	 * @param subject = Quizin ait olduğu ders.
+	 * @param quizName = Quizin ismi.
+	 * @param answers = Öğrencinin verdiği cevapları tutan liste.
+	 * @return Alınan puanı döndürür.
+	 */
 	public int calcScore(String subject, String quizName, List<String> answers) {
 		int score=0;
 		for(int i=0;i<answers.size();i++) {
@@ -784,6 +895,13 @@ public class QuizOp extends FileOp{
 		}
 		return score;
 	}
+	
+	/**
+	 * Yeni öğrenci eklendiğinde mevcut quizlerin öğrenciye tanımlanmasını sağlayan fonskiyon.
+	 * @param userName = Öğrencinin kullanıcı ismi.
+	 * @param name = Öğrencinin ismi.
+	 * @param sName = Öğrencinin soy ismi.
+	 */
 	public void scoreListForNewStd(String userName, String name, String sName){
 		File quizList = new File("txt/quizList.txt");
 		List<String> quizes = new ArrayList<>();

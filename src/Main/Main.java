@@ -8,11 +8,17 @@ import Users.Student;
 import Users.Teacher;
 
 public class Main {
-	
+	/**
+	 * Giriş yapma fonksiyonunu çağırır ve geri kalan işlemler ordan devam eder.
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		logIO();
 	}
 	
+	/**
+	 * Giriş yapma fonksiyonu kullanıcıdan kullanıcı adı ve şifresini alarak sistemde olup olmadığını kontrol eder eğer varsa rolüne uygun nesne oluşturarak UI(Arayüz) fonksiyonunu çağırır.
+	 */
 	public static void logIO() {
 		UserOp userOp = new UserOp();
 		try {
@@ -68,6 +74,12 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Kullanıcının varlığını isim ve soy ismi üzerinden kontrol eder
+	 * @param name = kullanıcının gerçek ismi
+	 * @param sName = kullanıcının soy ismi
+	 * @return kullanıcı var ya da yok
+	 */
 	public static boolean isExist(String name,String sName){
 		
 		try {	
@@ -96,6 +108,12 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Kullanıcının varlığını kullanıcı ismi ve şifre üzerinden kontrol eder
+	 * @param userName = kullanıcı ismi
+	 * @param password = şifre
+	 * @return var ya da yok
+	 */
 	public static boolean isExist(String userName,long password) {
 		
 		try {
@@ -126,6 +144,11 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Kullanıcının varlığını kullanıcı ismi üzerinden kontrol eder
+	 * @param userName = kullanıcı ismi
+	 * @return var ya da yok
+	 */
 	public static boolean isExist(String userName) {
 		
 		try {
