@@ -20,6 +20,7 @@ public class Main {
 	 * Giriş yapma fonksiyonu kullanıcıdan kullanıcı adı ve şifresini alarak sistemde olup olmadığını kontrol eder eğer varsa rolüne uygun nesne oluşturarak UI(Arayüz) fonksiyonunu çağırır.
 	 */
 	public static void logIO() {
+		//kullanıcıdan verileri alır, rolüne göre nesne oluşturur ve arayüzünü çağırır.
 		UserOp userOp = new UserOp();
 		try {
 			String userName;
@@ -84,23 +85,23 @@ public class Main {
 		
 		try {	
 			
-			File users = new File("txt/users.txt");
+			File users = new File("txt/users.txt");//kullanıcı verilerinin olduğu dosyayı açar
 			Scanner fileInput = new Scanner(users);
 		
 			while(fileInput.hasNextLine()) {
 				String line = fileInput.nextLine();
-				String[] splits = line.split(";");
+				String[] splits = line.split(";");// kullanıcı verilerini parçalara ayırır
 			
 				if(splits.length>=4) {
-					if(splits[2].equals(name) && splits[3].equals(sName)) {
+					if(splits[2].equals(name) && splits[3].equals(sName)) {//aradığımız kullanıcı mı diye kontrol eder
 						fileInput.close();
-						return true;
+						return true;//var bilgisi gönderir
 					}
 				}
 			}
 		
 			fileInput.close();
-			return false;
+			return false;//yok bilgisi gönderir
 		
 		}
 		catch (FileNotFoundException e) {
@@ -115,7 +116,8 @@ public class Main {
 	 * @return var ya da yok
 	 */
 	public static boolean isExist(String userName,long password) {
-		
+		//önceki metoddan farklı parametre alarak overload eder
+		//diğer metodla aynı işlemleri yapar fakat kullanıcı adı ve şifre üzerinden
 		try {
 			
 			File users = new File("txt/users.txt");
@@ -150,7 +152,8 @@ public class Main {
 	 * @return var ya da yok
 	 */
 	public static boolean isExist(String userName) {
-		
+		//önceki metodlardan daha az parametre alarak overload eder
+		//diğer metodlarla aynı işlemleri yapar fakat kullanıc üzerinden
 		try {
 			
 			File users = new File("txt/users.txt");

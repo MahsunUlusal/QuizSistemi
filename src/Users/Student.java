@@ -5,10 +5,12 @@ import FileOp.QuizOp;
 import FileOp.UserOp;
 import Main.Main;
 
-public class Student {
+public class Student implements User{
     
     private String name, sName, userName;
     private long password;
+    
+    //getter ve setter methodları
     public String getName() {
 		return name;
 	}
@@ -44,14 +46,27 @@ public class Student {
 	static Scanner input = new Scanner(System.in);
     QuizOp quizOp = new QuizOp();
     UserOp userOp = new UserOp();
-    public Student (String name, String sName, String userName, long password ) throws Exception {
+    
+    /**
+	 * Öğrenci nesnesi oluşturmaya yarar.
+	 * @param name = Öğrencinin ismi.
+	 * @param sName = Öğrencinin soy ismi.
+	 * @param userName = Öğrencinin kullanıcı adı.
+	 * @param password = Öğrencinin şifresi.
+	 */
+    public Student (String name, String sName, String userName, long password ) throws Exception {//öğrenci consructer
         this.name = name;
         this.sName = sName;
         this.userName = userName;
         this.password = password;
     }
     
+    /**
+     * Öğrencinin işlemlerini yapabilmesini sağlayan fonksiyon/arayüz. Öğrenci giriş yaptıktan sonra bu fonksiyon çağırılır.
+     */
     public void UI() {
+    	//öğrenci için arayüz sağlar
+    	//seçimlere göre diğer methodları çağırır
         try {
             boolean check = true;
              

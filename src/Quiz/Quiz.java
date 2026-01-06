@@ -8,6 +8,8 @@ public class Quiz {
 	
 private String quizName,subject;
 private int pointsCounter, questionCounter;
+
+// getter ve setter methodları.
 public String getQuizName() {
 	return quizName;
 }
@@ -27,7 +29,14 @@ public void setSubject(String subject) {
 static Scanner input = new Scanner(System.in);
 QuizOp quizOp = new QuizOp();
 UserOp userOp = new UserOp();
-	public Quiz(String quizName, String subject, String userName) throws Exception {
+
+/**
+ * Quiz nesnesi oluşturmaya yarar.
+ * @param quizName = Quizin ismi.
+ * @param subject = Quizin ait olduğu ders.
+ * @param userName = Quizi oluşturan öğretmenin kullanıcı adı.
+ */
+	public Quiz(String quizName, String subject, String userName) throws Exception {//quiz consructer
 		this.quizName = quizName;
 		this.subject = subject;
 		quizOp.createQuiz(subject,quizName,userName);
@@ -35,8 +44,12 @@ UserOp userOp = new UserOp();
 		this.questionCounter=0;
 	}
 
+	/**
+	 * Quiz oluşturulurken yapılan işlemlerin yapılabilmesini sağlayan fonksiyon/arayüz. Quiz oluşturulduktan sonra bu fonksiyon çağırılır.
+	 */
 	public void UI(){
-		
+		//quiz oluşturmak için arayüz sağlar
+		//seçimlere göre diğer methodları çağırır
         try {
 			boolean check = true;
 			while(check){
@@ -113,7 +126,7 @@ UserOp userOp = new UserOp();
 				     		input.nextLine();
 				     		if(answerChoice != 1 && answerChoice != 2) {
 				     			System.out.println("Geçerli bir değer giriniz.");
-				     			System.out.println("Geçerli bir değer giriniz.(1 veya 2");
+				     			System.out.println("Geçerli bir değer giriniz.(1 veya 2)");
 				     		}
 				     		else {
 				     			switch(answerChoice) {
@@ -188,7 +201,7 @@ UserOp userOp = new UserOp();
 				 		 System.out.println(questionNo+".soru\n");
 				 		 if("MC".equals(quizOp.show(subject,quizName,questionNo,"type"))) {
 				 			String questionLine = quizOp.show(subject,quizName,questionNo,"question");
-				 			String[] questionSplits = questionLine.split("¿");
+				 			String[] questionSplits = questionLine.split("¿");//soru test ise soru metni soruMetni¿a¿b¿c¿d¿ şeklinde saklanır bu yüzden gelen soru metnini parçalara ayırıyoruz
 				 			System.out.println(questionSplits[0]+"\n");
 				 			System.out.println("A)"+ questionSplits[1]);
 				 			System.out.println("B)"+ questionSplits[2]);
@@ -499,7 +512,7 @@ UserOp userOp = new UserOp();
 				     }
 				     
 				  	 case 6:{
-				  		if(pointsCounter == 100) {
+				  		if(pointsCounter == 100) {//quiz oluşturmayı bitirmeden önce toplam puan 100 mü diye kontrol eder
 				  			System.out.println("Quizi bitirmek istediğinize emin misiniz?\nBu işlem geri alınamaz ve quiz üzerinde bir daha değişiklik yapamazsınız.");
 							System.out.println("1) Evet\n2) Hayır");
 							int choice2 = input.nextInt();

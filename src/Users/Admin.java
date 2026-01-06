@@ -14,6 +14,7 @@ public class Admin implements User{
 	QuizOp quizOp = new QuizOp();
 	UserOp userOp = new UserOp();
 	
+	// getter ve setter methodları
     public String getName() {
 		return name;
 	}
@@ -38,13 +39,28 @@ public class Admin implements User{
 	public void setPassword(long password) {
 		this.password = password;
 	}
-	public Admin(String name,String sName,String userName,long password) throws Exception{
+	
+	/**
+	 * Admin nesnesi oluşturmaya yarar.
+	 * @param name = Adminin ismi.
+	 * @param sName = Adminin soy ismi.
+	 * @param userName = Adminin kullanıcı adı.
+	 * @param password = Adminin şifresi.
+	 */
+	public Admin(String name,String sName,String userName,long password) throws Exception{//admin consructer
     	this.name = name;
 		this.sName = sName;
 		this.userName = userName;
 		this.password = password;
    }
+	
+	 /**
+	 * Adminin işlemlerini yapabilmesini sağlayan fonksiyon/arayüz. Admin giriş yaptıktan sonra bu fonksiyon çağırılır.
+	 */
+
    public void UI() {
+	 //admin için arayüz sağlar
+	 //seçimlere göre diğer methodları çağırır
 	   try {
          System.out.println("Yapmak istediğiniz işlemi seçiniz.\n\n");
          System.out.println("1) Kullanıcı ekle.");
@@ -99,12 +115,18 @@ public class Admin implements User{
 		   UI();
 	   }
    }
+   
+   /**
+    * Kullanıcı silinmeden önce verisi silinecek kullanıcının bilgilerini alan fonksiyon.
+    * User sınıfındaki remove fonksiyonu burdan çağrılır.
+    */
+
    private void removeUser() {
-	   
+	   //silinecek kullanıcının verilerini alır ve asıl silme metodunu çağırır
 	   try {
 		System.out.println("Silmek istediğiniz kullanıcının kullanıcı adını giriniz.");
 		   String userName = input.nextLine();
-		   System.out.println("Silmek istediğiniz kullanıcının şifresini giriniz.");//geri çıkma?
+		   System.out.println("Silmek istediğiniz kullanıcının şifresini giriniz.");
 		   long password = input.nextLong();
 		   
 		   if(Main.isExist(userName,password)) {
@@ -129,7 +151,13 @@ public class Admin implements User{
 		   UI();
 	   }
    }
+   
+   /**
+    * Kullanıcı ile alakalı veriler gösterilmeden önce verisi gösterilecek kullanıcının bilgilerini ve gösterilmesi istenen veri bilgisini alan fonksiyon.
+    * User sınıfındaki show fonksiyonu burdan çağrılır.
+    */
    private void showUser(){
+	   // verileri gösterilecek kullanıcının kullanıcı adı ve şifresini alır, hangi veri gösterileceği bilgisini alır asıl gösterme metodunu çağırır
 	   try {
 		System.out.println("Görüntülemek istediğiniz kullanıcının kullanıcı adını giriniz.");
 		   String userName = input.nextLine();
@@ -217,7 +245,14 @@ public class Admin implements User{
 		   UI();
 	   }
    }
+   
+   /**
+    * Kullanıcı eklenmeden önce eklenecek kullanıcının bilgilerini alan fonksiyon.
+    * User sınıfındaki add fonksiyonları burdan çağrılır.
+    */
    private void addUser(){
+	   //kullanıcı eklemek için admine arayüz sağlar. Eklenecek kullanıcının verilerini alır
+	   //asıl kullanıcı ekleme metodunu çağırır
        try {
 		System.out.println("Hangi tür kullanıcı eklemek istersiniz?");
 		   System.out.println("1) Öğretmen");
@@ -254,12 +289,10 @@ public class Admin implements User{
 		                		System.out.println("Öğretmenin şifresini giriniz. (Sadece sayılardan oluşabilir)");
 		                		long password = input.nextLong();
 		                		userOp.add(name,sName,userName,password,subject,UserOp.Role.Teacher);
-		                		UI();
 		                	}
 		                	else {
 		                		System.out.println("Öğretmen halihazırda mevcut.");
 		                		check = false;
-		                		UI();
 		                		break;
 		                	}
 		              }
@@ -267,7 +300,7 @@ public class Admin implements User{
 		                  System.out.println("Lütfen geçerli bir veri tipi giriniz!");
 		                  UI();
 		              }                
-		         UI();
+		              UI();
 		              check = false;
 		              break;
 		        
@@ -361,7 +394,13 @@ public class Admin implements User{
 	   }
       
    }
+   
+   /**
+    * Kullanıcı ile alakalı veriler değiştirilmeden önce verisi değiştirilecek kullanıcının bilgilerini ve değiştirilecek veri bilgisini alan fonksiyon.
+    * User sınıfındaki change fonksiyonu burdan çağrılır.
+    */
    private void changeUser() { 
+	   //değiştirelecek kullanıcının verilerini ve hangi verinin değiştirileceğini alarak asıl değiştirme metodunu çağırır
 	  
 	   try {
 		System.out.println("Değiştirmek istediğiniz kullanıcının kullanıcı adını giriniz.");
@@ -376,7 +415,7 @@ public class Admin implements User{
 			  System.out.println("2) Soy ismi");
 			  System.out.println("3) Kullanıcı ismi");
 			  System.out.println("4) Şifresi");
-		   		if(userOp.show(userName,password,"role").equals("Teacher")) {
+		   		if(userOp.show(userName,password,"role").equals("Teacher")) {//verisi değiştirilecek kişi öğretmen ise girdiği ders seçeneği de sunulur
 		   			System.out.println("5) Girdiği ders");
 		   			System.out.println("6) Geri");
 		   		}

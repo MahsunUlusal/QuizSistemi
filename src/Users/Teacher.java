@@ -8,11 +8,13 @@ import FileOp.UserOp;
 import Main.Main;
 import Quiz.Quiz;
 
-public class Teacher{
+public class Teacher implements User{
 	
-	String name,sName,userName,subject;
+	private String name,sName,userName,subject;
 	private long password;
 	private static Scanner input = new Scanner(System.in);
+	
+	//getter ve setter methodları
 	public String getName() {
 		return name;
 	}
@@ -56,7 +58,16 @@ public class Teacher{
 	List<String> quizes = new ArrayList<>();
 	QuizOp quizOp = new QuizOp();
 	UserOp userOp = new UserOp();
-	public Teacher(String name, String sName, String userName, long password, String subject) throws Exception {
+	
+	/**
+	 * Öğretmen nesnesi oluşturmaya yarar.
+	 * @param name = Öğretmenin ismi.
+	 * @param sName = Öğretmenin soy ismi.
+	 * @param userName = Öğretmenin kullanıcı adı.
+	 * @param password = Öğretmenin şifresi.
+	 * @param subject = Öğretmenin girdiği ders.
+	 */
+	public Teacher(String name, String sName, String userName, long password, String subject){ // öğretmen consructer
 		this.name = name;
 		this.sName = sName;
 		this.userName = userName;
@@ -64,8 +75,12 @@ public class Teacher{
 		this.subject = subject;
 	}
 	
+	/**
+	 * Öğretmenin işlemlerini yapabilmesini sağlayan fonksiyon/arayüz. Öğretmen giriş yaptıktan sonra bu fonksiyon çağırılır.
+	 */
 	public void UI(){
-		
+		//öğretmen için arayüz sağlar
+    	//seçimlere göre diğer methodları çağırır
 		 try {
 			boolean check = true;
 			
